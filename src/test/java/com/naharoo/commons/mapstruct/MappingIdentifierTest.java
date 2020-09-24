@@ -73,6 +73,7 @@ class MappingIdentifierTest {
     }
 
     @Test
+    @DisplayName("When instance is constructed, equals, hashCode and toString should work as expected")
     void testEqualsHashCodeToString() {
         // Given
         final Class<?> source = String.class;
