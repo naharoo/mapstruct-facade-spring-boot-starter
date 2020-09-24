@@ -2,6 +2,7 @@ package com.naharoo.commons.mapstruct;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StopWatch;
 
 import java.util.*;
 import java.util.function.UnaryOperator;
@@ -15,11 +16,44 @@ public class SimpleMappingFacade implements MappingFacade {
         // only for extension
     }
 
-    @Override
-    public <S, D> D map(final S source, final Class<D> destinationClass) {
+    private static void logMappingEntranceTraceLog(final Object source, final Class<?> destinationClass) {
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(
+                    "Trying to map Object of type '{}' into '{}'...",
+                    source == null ? "null" : source.getClass().getSimpleName(),
+                    destinationClass.getSimpleName()
+            );
+        }
+    }
+
+    private static void logExitingDebugLog(
+            final String sourceSimpleName,
+            final String destinationSimpleName,
+            final long totalTimeMillis
+    ) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(
+                    "Successfully mapped Object of type '{}' into '{}' in {}ms.",
+                    sourceSimpleName,
+                    destinationSimpleName,
+                    totalTimeMillis
+            );
+        }
+    }
+
+    private static void assertDestinationClass(final Class<?> destinationClass) {
         if (destinationClass == null) {
             throw new IllegalArgumentException("Mapping Destination class cannot be null");
         }
+    }
+
+    @Override
+    public <S, D> D map(final S source, final Class<D> destinationClass) {
+        assertDestinationClass(destinationClass);
+        logMappingEntranceTraceLog(source, destinationClass);
+
+        final StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
 
         if (source == null) {
             return null;
@@ -51,9 +85,7 @@ public class SimpleMappingFacade implements MappingFacade {
         final String destinationSimpleName = destinationClass.getSimpleName();
 
         if (doCache) {
-            LOGGER.debug("Registering {} -> {} mapping...", sourceSimpleName, destinationSimpleName);
             MappingsRegistry.register(MappingIdentifier.from(sourceClass, destinationClass), function);
-            LOGGER.info("Registered {} -> {} mapping", sourceSimpleName, destinationSimpleName);
         }
 
         if (function == null) {
@@ -61,14 +93,16 @@ public class SimpleMappingFacade implements MappingFacade {
         }
 
         //noinspection unchecked
-        return (D) function.apply(source);
+        final D result = (D) function.apply(source);
+
+        stopWatch.stop();
+        logExitingDebugLog(sourceSimpleName, destinationSimpleName, stopWatch.getTotalTimeMillis());
+        return result;
     }
 
     @Override
     public <S, D> List<D> mapAsList(final Collection<S> sources, final Class<D> destinationClass) {
-        if (destinationClass == null) {
-            throw new IllegalArgumentException("Mapping Destination class cannot be null");
-        }
+        assertDestinationClass(destinationClass);
 
         if (sources == null) {
             return null;
@@ -86,9 +120,7 @@ public class SimpleMappingFacade implements MappingFacade {
 
     @Override
     public <S, D> Set<D> mapAsSet(final Collection<S> sources, final Class<D> destinationClass) {
-        if (destinationClass == null) {
-            throw new IllegalArgumentException("Mapping Destination class cannot be null");
-        }
+        assertDestinationClass(destinationClass);
 
         if (sources == null) {
             return null;

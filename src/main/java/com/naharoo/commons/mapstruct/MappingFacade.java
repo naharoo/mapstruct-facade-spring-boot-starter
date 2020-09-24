@@ -7,6 +7,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Main usage and entry point of Library.
+ * Provides a mapping facade based on mapping metadata collected earlier
+ * from {@link com.naharoo.commons.mapstruct.BaseMapper} extensions/children.
+ * <p>
+ * This interface is Spring-friendly. It can be easily injected into any business bean.
+ * Avoid injecting and using this Bean before Spring ApplicationContext's complete initialization.
+ * <p>
+ * Uses {@link com.naharoo.commons.mapstruct.MappingsRegistrationBeanPostProcessor}
+ * underneath to collect mapping metadata in Spring ApplicationContext's initialization phase.
+ *
+ * @see com.naharoo.commons.mapstruct.BaseMapper
+ * @see com.naharoo.commons.mapstruct.MappingsRegistrationBeanPostProcessor
+ */
 public interface MappingFacade {
 
     /**
