@@ -1,0 +1,1 @@
+This project has only two dependencies -> `org.springframework.boot:spring-boot-starter` and `org.mapstruct:mapstruct`. Their versions may be different from your applications'. In such cases, to avoid dependency conflicts you can adjust their versions in your local `dependencyManagement` configurations.

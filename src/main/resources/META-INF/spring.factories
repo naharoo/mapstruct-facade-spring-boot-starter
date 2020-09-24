@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.naharoo.commons.mapstruct.MapstructMapperFacadeAutoConfiguration
