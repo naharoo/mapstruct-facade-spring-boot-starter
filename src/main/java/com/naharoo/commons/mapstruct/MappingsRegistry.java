@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.UnaryOperator;
 
+@PrivateApi
 public final class MappingsRegistry {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MappingsRegistry.class);
@@ -36,6 +37,7 @@ public final class MappingsRegistry {
         }
     }
 
+    @PrivateApi
     static void register(final MappingIdentifier identifier, final UnaryOperator<Object> mapper) {
         if (identifier == null) {
             throw new IllegalArgumentException("Cannot register a Mapping with null Identifier");
@@ -52,6 +54,7 @@ public final class MappingsRegistry {
         logUnidirectionalMappingRegistrationDebug(sourceSimpleName, destinationSimpleName);
     }
 
+    @PrivateApi
     static UnaryOperator<Object> retrieve(final MappingIdentifier identifier) {
         if (identifier == null) {
             throw new IllegalArgumentException("Cannot get a Mapping with null Identifier");
@@ -59,10 +62,12 @@ public final class MappingsRegistry {
         return MAPPINGS.get(identifier);
     }
 
+    @PrivateApi
     static Set<Entry<MappingIdentifier, UnaryOperator<Object>>> retrieveAll() {
         return MAPPINGS.entrySet();
     }
 
+    @PrivateApi
     static boolean exists(final MappingIdentifier identifier) {
         if (identifier == null) {
             throw new IllegalArgumentException("Identifier cannot be null when checking for Mapping existence");

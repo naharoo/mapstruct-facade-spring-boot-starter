@@ -6,16 +6,17 @@ import org.springframework.context.annotation.Primary;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+@PrivateApi
 final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
 
+    @PrivateApi
     @Override
     public Object postProcessBeforeInitialization(final Object bean, final String beanName) {
         if (!(bean instanceof BaseMapper)) {
             return bean;
         }
 
-        //noinspection unchecked
-        final BaseMapper<Object, Object> castedBean = (BaseMapper<Object, Object>) bean;
+        @SuppressWarnings("unchecked") final BaseMapper<Object, Object> castedBean = (BaseMapper<Object, Object>) bean;
 
         final Class<?> beanClass = bean.getClass();
         final Type[] genericTypes = extractGenericParameters(beanClass);

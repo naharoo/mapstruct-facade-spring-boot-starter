@@ -21,6 +21,7 @@ import java.util.Set;
  * @see com.naharoo.commons.mapstruct.BaseMapper
  * @see com.naharoo.commons.mapstruct.MappingsRegistrationBeanPostProcessor
  */
+@PublicApi
 public interface MappingFacade {
 
     /**
@@ -34,6 +35,7 @@ public interface MappingFacade {
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
      * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
      */
+    @PublicApi
     @Nullable
     <S, D> D map(@Nullable S source, @NonNull Class<D> destinationClass);
 
@@ -50,6 +52,7 @@ public interface MappingFacade {
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
      * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
      */
+    @PublicApi
     @Nullable
     <S, D> List<D> mapAsList(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
 
@@ -66,6 +69,7 @@ public interface MappingFacade {
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
      * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
      */
+    @PublicApi
     @Nullable
     <S, D> Set<D> mapAsSet(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
 }

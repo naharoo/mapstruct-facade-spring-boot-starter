@@ -43,6 +43,7 @@ package com.naharoo.commons.mapstruct;
  * they are not managed by this Library.
  * </p>
  * <br/>
+ *
  * @param <S> Source type of the mapping
  * @param <D> Destination type of the mapping
  * @see org.mapstruct.Mapper
@@ -51,11 +52,15 @@ package com.naharoo.commons.mapstruct;
  * @see com.naharoo.commons.mapstruct.MappingsRegistry
  * @see com.naharoo.commons.mapstruct.MappingFacade
  */
+@PublicApi
 public interface BaseMapper<S, D> {
 
+    @PublicApi
     String SPRING_COMPONENT_MODEL = "spring";
 
+    @PublicApi
     D map(S source);
 
+    @PublicApi
     S mapReverse(D destination);
 }

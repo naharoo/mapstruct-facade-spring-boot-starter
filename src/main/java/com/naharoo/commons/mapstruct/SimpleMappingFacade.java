@@ -8,10 +8,12 @@ import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
+@PublicApi
 public class SimpleMappingFacade implements MappingFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMappingFacade.class);
 
+    @PublicApi
     protected SimpleMappingFacade() {
         // only for extension
     }
@@ -47,6 +49,7 @@ public class SimpleMappingFacade implements MappingFacade {
         }
     }
 
+    @PublicApi
     @Override
     public <S, D> D map(final S source, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);
@@ -92,14 +95,14 @@ public class SimpleMappingFacade implements MappingFacade {
             throw new MappingNotFoundException(sourceClass, destinationClass);
         }
 
-        //noinspection unchecked
-        final D result = (D) function.apply(source);
+        @SuppressWarnings("unchecked") final D result = (D) function.apply(source);
 
         stopWatch.stop();
         logExitingDebugLog(sourceSimpleName, destinationSimpleName, stopWatch.getTotalTimeMillis());
         return result;
     }
 
+    @PublicApi
     @Override
     public <S, D> List<D> mapAsList(final Collection<S> sources, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);
@@ -118,6 +121,7 @@ public class SimpleMappingFacade implements MappingFacade {
                 .collect(Collectors.toList());
     }
 
+    @PublicApi
     @Override
     public <S, D> Set<D> mapAsSet(final Collection<S> sources, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);

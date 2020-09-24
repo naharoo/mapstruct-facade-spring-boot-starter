@@ -1,5 +1,6 @@
 package com.naharoo.commons.mapstruct;
 
+@PrivateApi
 final class MappingIdentifier {
 
     private final Class<?> source;
@@ -10,7 +11,8 @@ final class MappingIdentifier {
         this.destination = destination;
     }
 
-    public static MappingIdentifier from(final Class<?> source, final Class<?> destination) {
+    @PrivateApi
+    static MappingIdentifier from(final Class<?> source, final Class<?> destination) {
         if (source == null) {
             throw new IllegalArgumentException("MappingIdentifier source cannot be null");
         }
@@ -21,11 +23,13 @@ final class MappingIdentifier {
         return new MappingIdentifier(source, destination);
     }
 
-    public Class<?> getSource() {
+    @PrivateApi
+    Class<?> getSource() {
         return source;
     }
 
-    public Class<?> getDestination() {
+    @PrivateApi
+    Class<?> getDestination() {
         return destination;
     }
 
