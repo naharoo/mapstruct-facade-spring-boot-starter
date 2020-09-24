@@ -1,3 +1,5 @@
+## MapStruct Mapping Facade
+
 ### External Dependencies
 This library has only two dependencies:
 1. `org.springframework.boot:spring-boot-starter`
@@ -24,3 +26,7 @@ Gradle
 
 ```
 (Note: If you are using Spring Boot BOM, or your application is extending Spring Boot Parent, then `org.springframework.boot:spring-boot-starter` dependency's version will be automatically adjusted).
+
+### License
+Mapstruct Mapping Facade is Open Source software released under the
+[Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0.html)

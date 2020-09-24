@@ -8,7 +8,7 @@
     <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
     <version>0.0.1</version>
 
-    <name>Mapstruct Mapping Facade</name>
+    <name>MapStruct Mapping Facade</name>
     <description>Mapping Facade for popular MapStruct library mappers in Spring Boot environment</description>
 
     <properties>
