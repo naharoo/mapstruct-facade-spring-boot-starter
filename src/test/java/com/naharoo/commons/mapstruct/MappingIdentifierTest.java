@@ -92,8 +92,8 @@ class MappingIdentifierTest {
                 .isEqualTo(firstIdentifier)
                 .isEqualTo(secondIdentifier)
                 .isNotEqualTo(null)
-                .isNotEqualTo(thirdIdentifier);
-        assertThat(firstIdentifier.hashCode()).isNotNull().isEqualTo(secondIdentifier.hashCode());
+                .isNotEqualTo(thirdIdentifier)
+                .hasSameHashCodeAs(secondIdentifier);
         assertThat(firstIdentifier.toString())
                 .isNotNull()
                 .contains(source.getSimpleName())
