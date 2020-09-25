@@ -75,4 +75,15 @@ public final class MappingsRegistry {
 
         return MAPPINGS.containsKey(identifier);
     }
+
+    @PrivateApi
+    static void clear() {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Clearing MappingsRegistry... All registered mappings will be removed");
+        }
+        MAPPINGS.clear();
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Done clearing MappingsRegistry. All registered mappings are removed");
+        }
+    }
 }
