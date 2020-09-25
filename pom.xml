@@ -87,6 +87,22 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${compiler.plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>com.amashchenko.maven.plugin</groupId>
                     <artifactId>gitflow-maven-plugin</artifactId>
                     <version>${gitflow.plugin.version}</version>
@@ -117,16 +133,6 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <version>${compiler.plugin.version}</version>
-                            <configuration>
-                                <source>${java.version}</source>
-                                <target>${java.version}</target>
-                            </configuration>
-                        </plugin>
-
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-deploy-plugin</artifactId>
@@ -161,23 +167,6 @@
             <build>
                 <pluginManagement>
                     <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <version>${compiler.plugin.version}</version>
-                            <configuration>
-                                <source>${java.version}</source>
-                                <target>${java.version}</target>
-                                <annotationProcessorPaths>
-                                    <path>
-                                        <groupId>org.mapstruct</groupId>
-                                        <artifactId>mapstruct-processor</artifactId>
-                                        <version>${mapstruct.version}</version>
-                                    </path>
-                                </annotationProcessorPaths>
-                            </configuration>
-                        </plugin>
-
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-deploy-plugin</artifactId>
