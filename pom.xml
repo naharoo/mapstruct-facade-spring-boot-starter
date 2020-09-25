@@ -39,6 +39,7 @@
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
         <surefire.argline/>
+        <easy-random.version>4.2.0</easy-random.version>
     </properties>
 
     <dependencies>
@@ -56,6 +57,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <version>${spring.boot.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-random-core</artifactId>
+            <version>${easy-random.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
