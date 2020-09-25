@@ -4,6 +4,7 @@ import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Constructor;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -71,5 +72,23 @@ class MappingsRegistryInvariantsTest {
 
         // Then
         throwableAssert.isNotNull().isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("When trying to reflective create MappingsRegistry instance, error should be thrown")
+    void testCreateInstance() {
+        // Given
+        // no initial config
+
+        // When
+        final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(() -> {
+            final Class<MappingsRegistry> clazz = MappingsRegistry.class;
+            final Constructor<MappingsRegistry> constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            constructor.newInstance();
+        });
+
+        // Then
+        throwableAssert.isNotNull().getRootCause().isInstanceOf(IllegalAccessError.class);
     }
 }
