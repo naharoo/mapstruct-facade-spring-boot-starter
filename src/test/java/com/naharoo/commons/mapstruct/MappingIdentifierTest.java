@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SuppressWarnings("ConstantConditions")
 class MappingIdentifierTest {
@@ -99,5 +101,16 @@ class MappingIdentifierTest {
                 .contains(source.getSimpleName())
                 .contains(destination.getSimpleName())
                 .isEqualTo(secondIdentifier.toString());
+    }
+
+    @SuppressWarnings("EqualsWithItself")
+    @Test
+    @DisplayName("Dummy Tests just for coverage. Nothing serious")
+    void dummyTests() {
+        final Class<String> destinationClass = String.class;
+        final MappingIdentifier identifier = MappingIdentifier.from(int.class, destinationClass);
+        assertNotEquals(identifier, new Object());
+        assertNotEquals(identifier, MappingIdentifier.from(short.class, destinationClass));
+        assert identifier.equals(identifier);
     }
 }
