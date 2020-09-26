@@ -71,16 +71,16 @@ public class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
         // Then
         assertThat(addressDtos).isNotNull().isNotEmpty().size().isEqualTo(addresses.size());
 
-        addressDtos.forEach(dto -> {
-            assertThat(addresses.contains(new Address(dto.getCountry(), dto.getCity(), dto.getPostalCode()))).isTrue();
-        });
-        addresses.forEach(address -> {
-            assertThat(addressDtos.contains(new AddressDto(
-                    address.getCountry(),
-                    address.getCity(),
-                    address.getPostalCode()
-            ))).isTrue();
-        });
+        addressDtos.forEach(dto -> assertThat(addresses.contains(new Address(
+                dto.getCountry(),
+                dto.getCity(),
+                dto.getPostalCode()
+        ))).isTrue());
+        addresses.forEach(address -> assertThat(addressDtos.contains(new AddressDto(
+                address.getCountry(),
+                address.getCity(),
+                address.getPostalCode()
+        ))).isTrue());
     }
 
     @Test
