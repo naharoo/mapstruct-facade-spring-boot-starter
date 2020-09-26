@@ -38,7 +38,7 @@
         <surefire.plugin.version>2.22.2</surefire.plugin.version>
         <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
         <compiler.plugin.version>3.8.1</compiler.plugin.version>
-        <surefire.argline/>
+        <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
         <easy-random.version>4.2.0</easy-random.version>
     </properties>
 
@@ -81,6 +81,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -163,6 +167,15 @@
                                 <skip>true</skip>
                             </configuration>
                         </plugin>
+
+                        <plugin>
+                            <groupId>org.jacoco</groupId>
+                            <artifactId>jacoco-maven-plugin</artifactId>
+                            <version>${jacoco.plugin.version}</version>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </plugin>
                     </plugins>
                 </pluginManagement>
             </build>
@@ -197,7 +210,6 @@
                                 <excludes>
                                     <exclude>**IntegrationTest</exclude>
                                 </excludes>
-                                <argLine>${surefire.argline}</argLine>
                             </configuration>
                         </plugin>
 
@@ -208,6 +220,26 @@
                             <configuration>
                                 <skip>true</skip>
                             </configuration>
+                        </plugin>
+
+                        <plugin>
+                            <groupId>org.jacoco</groupId>
+                            <artifactId>jacoco-maven-plugin</artifactId>
+                            <version>${jacoco.plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>prepare-agent</id>
+                                    <goals>
+                                        <goal>prepare-agent</goal>
+                                    </goals>
+                                </execution>
+                                <execution>
+                                    <id>report</id>
+                                    <goals>
+                                        <goal>report</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
                         </plugin>
                     </plugins>
                 </pluginManagement>
