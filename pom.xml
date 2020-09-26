@@ -171,6 +171,12 @@
         <profile>
             <id>ci</id>
 
+            <properties>
+                <sonar.projectKey>naharoo_mapstruct-facade-spring-boot-starter</sonar.projectKey>
+                <sonar.organization>nhos</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+            </properties>
+
             <build>
                 <pluginManagement>
                     <plugins>
