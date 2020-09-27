@@ -8,6 +8,7 @@
 
     <name>MapStruct Mapping Facade</name>
     <description>Mapping Facade for popular MapStruct library mappers in Spring Boot environment</description>
+    <url>https://naharoo.com/oss/mapstruct-facade-spring-boot-starter</url>
 
     <scm>
         <connection>scm:git:ssh://git@github.com/naharoo/mapstruct-facade-spring-boot-starter.git</connection>
@@ -16,6 +17,13 @@
         <url>https://github.com/naharoo/mapstruct-facade-spring-boot-starter</url>
         <tag>HEAD</tag>
     </scm>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
