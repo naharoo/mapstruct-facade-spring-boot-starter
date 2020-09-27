@@ -1,4 +1,4 @@
-name: PR
+name: PR-to-Develop
 on:
   pull_request:
     types: [ opened, synchronize, reopened ]
