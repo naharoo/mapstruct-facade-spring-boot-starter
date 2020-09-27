@@ -1,4 +1,4 @@
-name: PR-Merge
+name: Develop
 on:
   push:
     branches:
