@@ -1,5 +1,47 @@
 ## MapStruct Mapping Facade
 
+### Installation
+
+Maven (pom.xml)
+```
+<dependencies>
+    <dependency>
+        <groupId>com.naharoo.commons</groupId>
+        <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
+        <version>${mapstruct.facade.version}</version>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>${java.version}</source>
+                <target>${java.version}</target>
+                <annotationProcessorPaths>
+                    <path>
+                        <groupId>org.mapstruct</groupId>
+                        <artifactId>mapstruct-processor</artifactId>
+                        <version>${mapstruct.version}</version>
+                    </path>
+                </annotationProcessorPaths>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
+
+Gradle (build.gradle)
+```
+dependencies {
+    annotationProcessor 'org.mapstruct:mapstruct-processor:${mapstruct.version}'
+    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:${mapstruct.facade.version}'
+}
+```
+(Note: If you are also using Lombok, then it's annotation processor must be declared before MapStruct's annotation processor's declaration)
+
 ### External Dependencies
 This library has only two dependencies:
 1. `org.springframework.boot:spring-boot-starter`
@@ -23,7 +65,11 @@ Maven
 
 Gradle
 ```
-
+implementation('org.mapstruct:mapstruct') {
+    version {
+        strictly '${your.mapstruct.version}'
+    }
+}
 ```
 (Note: If you are using Spring Boot BOM, or your application is extending Spring Boot Parent, then `org.springframework.boot:spring-boot-starter` dependency's version will be automatically adjusted).
 
