@@ -1,4 +1,4 @@
-name: Develop
+name: Analyze Master/Develop
 on:
   push:
     branches:
