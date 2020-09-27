@@ -22,15 +22,46 @@ package com.naharoo.commons.mapstruct;
  * Sample of usage:
  * <pre>{@code
  * @Mapper(componentModel = "spring")
- * public interface CarsMapper extends BaseMapper<Car, CarDto> {
+ * public interface CarsMapper extends BaseMapper<Car, CarDto> {}
+ * }</pre>
+ * </p>
  *
- * }
+ * <p>
+ * Mapping Polymorphic hierarchies, i.e. subtypes.
+ * Here all concrete class mappings need to be registered.
+ *
+ * <pre>{@code
+ * abstract class Message {}
+ * class TextMessage extends Message {}
+ * class ImageMessage extends Message {}
+ * class VideoMessage extends Message {}
+ *
+ * abstract class MessageDto {}
+ * class TextMessageDto extends MessageDto {}
+ * class ImageMessageDto extends MessageDto {}
+ * class VideoMessageDto extends MessageDto {}
+ *
+ * @Mapper(componentModel = "spring")
+ * public interface TextMessageMapper extends BaseMapper<TextMessage, TextMessageDto> {}
+ * @Mapper(componentModel = "spring")
+ * public interface ImageMessageMapper extends BaseMapper<ImageMessage, ImageMessageDto> {}
+ * @Mapper(componentModel = "spring")
+ * public interface VideoMessageMapper extends BaseMapper<VideoMessage, VideoMessageDto> {}
+ *
+ * TextMessage textMessage = mappingFacade.map(new TextMessageDto(), TextMessage.class);
+ * Message imageMessage = mappingFacade.map(new ImageMessageDto(), Message.class);
+ * MessageDto videoMessageDto = mappingFacade.map(new VideoMessage(), MessageDto.class);
  * }</pre>
  * </p>
  *
  * <p>
  * No default implementation of derived methods is required, unless you need to
  * customize the mapping algorithm.
+ * </p>
+ *
+ * <p>
+ * To customize the mapping algorithm, default implementations of {@link #map(S)} and {@link #mapReverse(D)}
+ * can be used. Also MapStruct's {@link org.mapstruct.DecoratedWith} can be used in customization purposes.
  * </p>
  *
  * <p>
@@ -51,6 +82,7 @@ package com.naharoo.commons.mapstruct;
  * @see com.naharoo.commons.mapstruct.MappingsRegistrationBeanPostProcessor
  * @see com.naharoo.commons.mapstruct.MappingsRegistry
  * @see com.naharoo.commons.mapstruct.MappingFacade
+ * @see org.mapstruct.DecoratedWith
  */
 @PublicApi
 public interface BaseMapper<S, D> {
