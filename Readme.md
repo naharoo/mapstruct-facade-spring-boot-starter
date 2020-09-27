@@ -1,4 +1,4 @@
-## MapStruct Mapping Facade
+## MapStruct Mapping Facade [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=naharoo_mapstruct-facade-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=naharoo_mapstruct-facade-spring-boot-starter)
 
 ### Overview
 This is a generic Facade over MapStruct mapping Library.
