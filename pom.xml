@@ -116,10 +116,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.amashchenko.maven.plugin</groupId>
-                <artifactId>gitflow-maven-plugin</artifactId>
-            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -137,23 +133,6 @@
                                 <version>${mapstruct.version}</version>
                             </path>
                         </annotationProcessorPaths>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>com.amashchenko.maven.plugin</groupId>
-                    <artifactId>gitflow-maven-plugin</artifactId>
-                    <version>${gitflow.plugin.version}</version>
-                    <configuration>
-                        <versionDigitToIncrement>1</versionDigitToIncrement>
-                        <gitFlowConfig>
-                            <productionBranch>master</productionBranch>
-                            <developmentBranch>develop</developmentBranch>
-                            <featureBranchPrefix>feature/</featureBranchPrefix>
-                            <releaseBranchPrefix>release/</releaseBranchPrefix>
-                            <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
-                            <supportBranchPrefix>support/</supportBranchPrefix>
-                            <origin>origin</origin>
-                        </gitFlowConfig>
                     </configuration>
                 </plugin>
             </plugins>
@@ -207,9 +186,6 @@
                             <groupId>org.sonatype.plugins</groupId>
                             <artifactId>nexus-staging-maven-plugin</artifactId>
                             <version>${nexus-staging-maven-plugin.version}</version>
-                            <configuration>
-                                <skip>true</skip>
-                            </configuration>
                         </plugin>
 
                         <plugin>
@@ -308,9 +284,6 @@
                             <groupId>org.sonatype.plugins</groupId>
                             <artifactId>nexus-staging-maven-plugin</artifactId>
                             <version>${nexus-staging-maven-plugin.version}</version>
-                            <configuration>
-                                <skip>true</skip>
-                            </configuration>
                         </plugin>
 
                         <plugin>
