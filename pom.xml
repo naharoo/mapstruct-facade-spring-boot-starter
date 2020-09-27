@@ -12,8 +12,8 @@
     <description>Mapping Facade for popular MapStruct library mappers in Spring Boot environment</description>
 
     <scm>
-        <connection>scm:git:ssh://github.com/naharoo/mapstruct-facade-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:ssh@github.com:naharoo/naharoo.git
+        <connection>scm:git:ssh://git@github.com/naharoo/mapstruct-facade-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/naharoo/mapstruct-facade-spring-boot-starter.git
         </developerConnection>
         <url>https://github.com/naharoo/mapstruct-facade-spring-boot-starter</url>
         <tag>HEAD</tag>
