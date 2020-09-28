@@ -94,7 +94,7 @@ Maven (pom.xml)
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
                 <source>${java.version}</source>
-                <target>${java.version}</target>
+                <target>${mjava.version}</target>
                 <annotationProcessorPaths>
                     <path>
                         <groupId>org.mapstruct</groupId>
