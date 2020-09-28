@@ -83,7 +83,7 @@ Maven (pom.xml)
     <dependency>
         <groupId>com.naharoo.commons</groupId>
         <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
-        <version>${mapstruct.facade.version}</version>
+        <version>1.0.0</version>
     </dependency>
 </dependencies>
 
@@ -99,7 +99,7 @@ Maven (pom.xml)
                     <path>
                         <groupId>org.mapstruct</groupId>
                         <artifactId>mapstruct-processor</artifactId>
-                        <version>${mapstruct.version}</version>
+                        <version>1.4.0.Final</version>
                     </path>
                 </annotationProcessorPaths>
             </configuration>
@@ -111,8 +111,8 @@ Maven (pom.xml)
 Gradle (build.gradle)
 ```
 dependencies {
-    annotationProcessor 'org.mapstruct:mapstruct-processor:${mapstruct.version}'
-    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:${mapstruct.facade.version}'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.0.Final'
+    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:1.0.0'
 }
 ```
 (Note: If you are also using Lombok, then it's annotation processor must be declared before MapStruct's annotation processor's declaration)
@@ -132,7 +132,7 @@ Maven
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${your.mapstruct.version}</version>
+            <version>1.3.0.Final</version>
         </dependency>
     </dependencies>
 </dependencyManagement>
@@ -142,7 +142,7 @@ Gradle
 ```
 implementation('org.mapstruct:mapstruct') {
     version {
-        strictly '${your.mapstruct.version}'
+        strictly '1.3.0.Final'
     }
 }
 ```
