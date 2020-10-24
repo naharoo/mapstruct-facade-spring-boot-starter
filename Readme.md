@@ -115,7 +115,7 @@ dependencies {
     implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:1.0.0'
 }
 ```
-(Note: If you are also using Lombok, then it's annotation processor must be declared before MapStruct's annotation processor's declaration)
+(Note: If you are also using Lombok, then it's annotation processor must be declared before MapStruct's annotation processor's declaration in Maven builds and after MapStruct's AP - in Gradle builds)
 
 ### External Dependencies
 This library has only two dependencies:
@@ -140,9 +140,9 @@ Maven
 
 Gradle
 ```
-implementation('org.mapstruct:mapstruct') {
-    version {
-        strictly '1.3.0.Final'
+dependencyManagement {
+    dependencies {
+        dependency("org.mapstruct:mapstruct:1.3.0.Final")
     }
 }
 ```
