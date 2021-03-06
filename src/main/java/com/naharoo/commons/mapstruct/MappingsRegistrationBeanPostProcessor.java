@@ -33,9 +33,21 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
-    private Type[] extractGenericParameters(final Class<?> beanClass) {
-        final Class<?> firstAnnotatedInterfaceClass = (Class<?>) beanClass.getAnnotatedInterfaces()[0].getType();
-        final ParameterizedType firstGenericSuperInterfaceType = (ParameterizedType) firstAnnotatedInterfaceClass.getGenericInterfaces()[0];
-        return firstGenericSuperInterfaceType.getActualTypeArguments();
+    private Type[] extractGenericParameters(Class<?> beanClass) {
+        while (!Object.class.equals(beanClass.getAnnotatedSuperclass().getType())) {
+            beanClass = (Class<?>) beanClass.getAnnotatedSuperclass().getType();
+        }
+
+        final Type superInterfaceType = beanClass.getAnnotatedInterfaces()[0].getType();
+
+        if (superInterfaceType instanceof Class) {
+            final Class<?> firstAnnotatedInterfaceClass = (Class<?>) superInterfaceType;
+            final ParameterizedType firstGenericSuperInterfaceType = (ParameterizedType) firstAnnotatedInterfaceClass.getGenericInterfaces()[0];
+            return firstGenericSuperInterfaceType.getActualTypeArguments();
+        } else if (superInterfaceType instanceof ParameterizedType) {
+            return ((ParameterizedType) superInterfaceType).getActualTypeArguments();
+        }
+
+        throw new IllegalArgumentException("Failed to extract Generic Parameters from " + beanClass.getName());
     }
 }
