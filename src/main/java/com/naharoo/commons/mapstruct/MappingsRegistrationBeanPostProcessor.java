@@ -2,9 +2,7 @@ package com.naharoo.commons.mapstruct;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Primary;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import org.springframework.core.GenericTypeResolver;
 
 @PrivateApi
 final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
@@ -19,9 +17,9 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
         @SuppressWarnings("unchecked") final BaseMapper<Object, Object> castedBean = (BaseMapper<Object, Object>) bean;
 
         final Class<?> beanClass = bean.getClass();
-        final Type[] genericTypes = extractGenericParameters(beanClass);
-        final Class<?> source = (Class<?>) genericTypes[0];
-        final Class<?> destination = (Class<?>) genericTypes[1];
+        final Class<?>[] genericClasses = extractGenericParameters(beanClass);
+        final Class<?> source = genericClasses[0];
+        final Class<?> destination = genericClasses[1];
 
         final MappingIdentifier directMappingIdentifier = MappingIdentifier.from(source, destination);
 
@@ -33,21 +31,13 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
-    private Type[] extractGenericParameters(Class<?> beanClass) {
-        while (!Object.class.equals(beanClass.getAnnotatedSuperclass().getType())) {
-            beanClass = (Class<?>) beanClass.getAnnotatedSuperclass().getType();
+    private Class<?>[] extractGenericParameters(Class<?> beanClass) {
+        final Class<?>[] classes = GenericTypeResolver.resolveTypeArguments(beanClass, BaseMapper.class);
+
+        if (classes == null || classes.length < 2) {
+            throw new IllegalArgumentException("Failed to extract Generic Parameters from " + beanClass.getName());
         }
 
-        final Type superInterfaceType = beanClass.getAnnotatedInterfaces()[0].getType();
-
-        if (superInterfaceType instanceof Class) {
-            final Class<?> firstAnnotatedInterfaceClass = (Class<?>) superInterfaceType;
-            final ParameterizedType firstGenericSuperInterfaceType = (ParameterizedType) firstAnnotatedInterfaceClass.getGenericInterfaces()[0];
-            return firstGenericSuperInterfaceType.getActualTypeArguments();
-        } else if (superInterfaceType instanceof ParameterizedType) {
-            return ((ParameterizedType) superInterfaceType).getActualTypeArguments();
-        }
-
-        throw new IllegalArgumentException("Failed to extract Generic Parameters from " + beanClass.getName());
+        return classes;
     }
 }
