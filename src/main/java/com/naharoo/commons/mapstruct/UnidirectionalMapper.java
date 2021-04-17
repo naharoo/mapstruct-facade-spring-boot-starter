@@ -5,8 +5,8 @@ package com.naharoo.commons.mapstruct;
  * <p>
  * All mappings which are supposed to be registered must:
  * <ol>
- *     <li>Be declared as interfaces</li>
- *     <li>Extend this interface</li>
+ *     <li>Be declared as interfaces or abstract classes</li>
+ *     <li>Extend/Implement this interface</li>
  *     <li>Be annotated with {@link org.mapstruct.Mapper} annotation</li>
  *     <li>Declare <code>"spring"</code> as their {@link org.mapstruct.Mapper#componentModel()}</li>
  * </ol>
@@ -22,7 +22,7 @@ package com.naharoo.commons.mapstruct;
  * Sample of usage:
  * <pre>{@code
  * @Mapper(componentModel = "spring")
- * public interface CarsMapper extends BaseMapper<Car, CarDto> {}
+ * public interface CarsMapper extends UnidirectionalMapper<Car, CarDto> {}
  * }</pre>
  * </p>
  *
@@ -42,31 +42,26 @@ package com.naharoo.commons.mapstruct;
  * class VideoMessageDto extends MessageDto {}
  *
  * @Mapper(componentModel = "spring")
- * public interface TextMessageMapper extends BaseMapper<TextMessage, TextMessageDto> {}
+ * public interface TextMessageMapper extends UnidirectionalMapper<TextMessage, TextMessageDto> {}
  * @Mapper(componentModel = "spring")
- * public interface ImageMessageMapper extends BaseMapper<ImageMessage, ImageMessageDto> {}
+ * public interface ImageMessageMapper extends UnidirectionalMapper<ImageMessage, ImageMessageDto> {}
  * @Mapper(componentModel = "spring")
- * public interface VideoMessageMapper extends BaseMapper<VideoMessage, VideoMessageDto> {}
+ * public interface VideoMessageMapper extends UnidirectionalMapper<VideoMessage, VideoMessageDto> {}
  *
- * TextMessage textMessage = mappingFacade.map(new TextMessageDto(), TextMessage.class);
- * Message imageMessage = mappingFacade.map(new ImageMessageDto(), Message.class);
+ * TextMessageDto textMessageDto = mappingFacade.map(new TextMessage(), TextMessageDto.class);
+ * MessageDto imageMessageDto = mappingFacade.map(new ImageMessage(), MessageDto.class);
  * MessageDto videoMessageDto = mappingFacade.map(new VideoMessage(), MessageDto.class);
  * }</pre>
  * </p>
  *
  * <p>
- * No default implementation of derived methods is required, unless you need to
+ * No default implementation of derived map method is required, unless you need to
  * customize the mapping algorithm.
  * </p>
  *
  * <p>
- * To customize the mapping algorithm, default implementations of {@link #map(S)} and {@link #mapReverse(D)}
+ * To customize the mapping algorithm, default implementation of {@link #map(S)}
  * can be used. Also MapStruct's {@link org.mapstruct.DecoratedWith} can be used in customization purposes.
- * </p>
- *
- * <p>
- * {@link S} and {@link D} generic types' declaration order doesn't matter, both
- * combinations will be registered as legal mappings.
  * </p>
  *
  * <p>
@@ -85,5 +80,8 @@ package com.naharoo.commons.mapstruct;
  * @see org.mapstruct.DecoratedWith
  */
 @PublicApi
-public interface BaseMapper<S, D> extends BidirectionalMapper<S, D> {
+public interface UnidirectionalMapper<S, D> extends Mapper {
+
+    @PublicApi
+    D map(S source);
 }

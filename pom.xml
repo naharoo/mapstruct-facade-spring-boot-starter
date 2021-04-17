@@ -39,7 +39,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>2.4.5</spring.boot.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <gitflow.plugin.version>1.14.0</gitflow.plugin.version>
         <deploy.plugin.version>3.0.0-M1</deploy.plugin.version>
         <release.plugin.version>3.0.0-M4</release.plugin.version>
         <surefire.plugin.version>2.22.2</surefire.plugin.version>

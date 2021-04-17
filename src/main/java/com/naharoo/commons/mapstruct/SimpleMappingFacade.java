@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 
+import java.lang.invoke.MethodType;
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -47,6 +49,16 @@ public class SimpleMappingFacade implements MappingFacade {
         if (destinationClass == null) {
             throw new IllegalArgumentException("Mapping Destination class cannot be null");
         }
+    }
+
+    private static <D> Class<?> wrapPrimitive(final Class<D> primitiveClass) {
+        return MethodType.methodType(primitiveClass).wrap().returnType();
+    }
+
+    private static <D> Class<?> wrapIfNeeded(final Class<D> destinationClass) {
+        return destinationClass.isPrimitive()
+               ? wrapPrimitive(destinationClass)
+               : destinationClass;
     }
 
     @PublicApi
@@ -138,5 +150,46 @@ public class SimpleMappingFacade implements MappingFacade {
                 .stream()
                 .map(source -> map(source, destinationClass))
                 .collect(Collectors.toSet());
+    }
+
+    @PublicApi
+    @SuppressWarnings("unchecked")
+    @Override
+    public <S, D> D[] mapAsArray(final Collection<S> sources, final Class<D> destinationClass) {
+        assertDestinationClass(destinationClass);
+
+        if (sources == null) {
+            return null;
+        }
+
+        final int size = sources.size();
+        final D[] destinations = (D[]) Array.newInstance(wrapIfNeeded(destinationClass), size);
+
+        int i = 0;
+        for (final S source : sources) {
+            destinations[i++] = map(source, destinationClass);
+        }
+
+        return destinations;
+    }
+
+    @PublicApi
+    @SuppressWarnings("unchecked")
+    @Override
+    public <S, D> D[] mapAsArray(final S[] sources, final Class<D> destinationClass) {
+        assertDestinationClass(destinationClass);
+
+        if (sources == null) {
+            return null;
+        }
+
+        final int size = sources.length;
+        final D[] destinations = (D[]) Array.newInstance(wrapIfNeeded(destinationClass), size);
+
+        for (int i = 0; i < size; i++) {
+            destinations[i] = map(sources[i], destinationClass);
+        }
+
+        return destinations;
     }
 }
