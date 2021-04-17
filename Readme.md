@@ -99,7 +99,7 @@ Maven (pom.xml)
                     <path>
                         <groupId>org.mapstruct</groupId>
                         <artifactId>mapstruct-processor</artifactId>
-                        <version>1.4.1.Final</version>
+                        <version>1.4.2.Final</version>
                     </path>
                 </annotationProcessorPaths>
             </configuration>
@@ -111,7 +111,7 @@ Maven (pom.xml)
 Gradle (build.gradle)
 ```
 dependencies {
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
     implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:1.0.0'
 }
 ```
