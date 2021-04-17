@@ -107,4 +107,54 @@ public class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
             assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
         }
     }
+
+    @Test
+    @DisplayName("When mappings are configured, Collection<D> -> S[] mapping should map all fields")
+    void testMapCollectionOfDToArrayOfS() {
+        // Given
+        final List<AddressDto> addressDtos = Arrays.asList(
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+        );
+
+        // When
+        final Address[] addresses = mappingFacade.mapAsArray(addressDtos, Address.class);
+
+        // Then
+        assertThat(addresses).isNotNull().isNotEmpty().hasSize(addressDtos.size());
+
+        for (int i = 0; i < addresses.length; i++) {
+            final Address address = addresses[i];
+            final AddressDto addressDto = addressDtos.get(i);
+            assertThat(addressDto.getCountry()).isEqualTo(address.getCountry());
+            assertThat(addressDto.getCity()).isEqualTo(address.getCity());
+            assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
+        }
+    }
+
+    @Test
+    @DisplayName("When mappings are configured, D[] -> S[] mapping should map all fields")
+    void testMapArrayOfDToArrayOfS() {
+        // Given
+        final AddressDto[] addressDtos = {
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+        };
+
+        // When
+        final Address[] addresses = mappingFacade.mapAsArray(addressDtos, Address.class);
+
+        // Then
+        assertThat(addresses).isNotNull().isNotEmpty().hasSize(addressDtos.length);
+
+        for (int i = 0; i < addresses.length; i++) {
+            final Address address = addresses[i];
+            final AddressDto addressDto = addressDtos[i];
+            assertThat(addressDto.getCountry()).isEqualTo(address.getCountry());
+            assertThat(addressDto.getCity()).isEqualTo(address.getCity());
+            assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
+        }
+    }
 }

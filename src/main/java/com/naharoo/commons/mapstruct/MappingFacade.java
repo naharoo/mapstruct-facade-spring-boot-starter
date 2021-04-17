@@ -69,4 +69,36 @@ public interface MappingFacade {
      */
     @PublicApi
     <S, D> Set<D> mapAsSet(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
+
+    /**
+     * Maps <code>sources</code> set into an array of objects having <code>destinationClass</code> type.
+     *
+     * @param sources          Original collection of source Objects which will be mapped into an array of objects having
+     *                         <code>destinationClass</code> type
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target Arrays
+     *                         generic type
+     * @param <S>              Original source Objects Collection's Java generic type
+     * @param <D>              Mapping destination Objects Array's Java generic type
+     * @return mapped destination objects array or null, if provided <code>sources</code> was also null
+     * @throws IllegalArgumentException if <code>destinationClass</code> is null
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     */
+    @PublicApi
+    <S, D> D[] mapAsArray(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
+
+    /**
+     * Maps <code>sources</code> array into an array of objects having <code>destinationClass</code> type.
+     *
+     * @param sources          Original array of source Objects which will be mapped into an array of objects having
+     *                         <code>destinationClass</code> type
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target Arrays
+     *                         generic type
+     * @param <S>              Original source Objects Array's Java generic type
+     * @param <D>              Mapping destination Objects Array's Java generic type
+     * @return mapped destination objects array or null, if provided <code>sources</code> was also null
+     * @throws IllegalArgumentException if <code>destinationClass</code> is null
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     */
+    @PublicApi
+    <S, D> D[] mapAsArray(@Nullable S[] sources, @NonNull Class<D> destinationClass);
 }

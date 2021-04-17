@@ -134,6 +134,49 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
     }
 
     @Test
+    @DisplayName("When source array is null, null should be returned")
+    void testNullArraySourceMapAsArray() {
+        // Given
+        final Object[] sources = null;
+
+        // When
+        final String[] result = mappingFacade.mapAsArray(sources, String.class);
+
+        // Then
+        assertThat(result).isNull();
+    }
+
+    @Test
+    @DisplayName("When destinationClass is null during mapAsArray, exception should be thrown")
+    void testArrayNullDestinationClassMapAsArray() {
+        // Given
+        final Object[] sources = {new Object()};
+        final Class<?> destinationClass = null;
+
+        // When
+        final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
+                () -> mappingFacade.mapAsArray(sources, destinationClass)
+        );
+
+        // Then
+        throwableAssert.isNotNull().isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("When sources array is empty during mapAsArray, empty array should be returned")
+    void testEmptySourcesArrayMapAsArray() {
+        // Given
+        final Object[] sources = {};
+        final Class<?> destinationClass = int.class;
+
+        // When
+        final Object[] result = mappingFacade.mapAsArray(sources, destinationClass);
+
+        // Then
+        assertThat(result).isNotNull().isEmpty();
+    }
+
+    @Test
     @DisplayName("When mapping is not registered for S -> D, exception should be thrown")
     void testMappingNotRegisteredMap() {
         // Given

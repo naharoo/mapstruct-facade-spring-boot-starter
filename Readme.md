@@ -22,10 +22,10 @@ public class CarDto {
 }
 ```
 
-You have an instance of `Car` and need to convert it into `CarDto`. In a first place, let's declare a mapper in MapStruct style and extend it from BaseMapper interface. It will give us bidirectional mapping abstractions. Don't forget to annotate it with MapStruct's `@Mapper` annotation and set `componentModel` to `"spring"`.
+You have an instance of `Car` and need to convert it into `CarDto`. In the first place, let's declare a mapper in MapStruct style and extend it from UnidirectionalMapper interface. It will give us unidirectional mapping abstractions. Don't forget to annotate it with MapStruct's `@Mapper` annotation and set `componentModel` to `"spring"`.
 ```
 @Mapper(componentModel = "spring")
-public interface CarMapper extends BaseMapper<Car, CarDto> {}
+public interface CarMapper extends UnidirectionalMapper<Car, CarDto> {}
 ```
 
 That's it. We've configured and registered a mapping! Now we can inject `MappingFacade` and map our POJOs.
@@ -57,21 +57,21 @@ public class VideoMessageDto extends MessageDto {}
 ```
 ```
 @Mapper(componentModel = "spring")
-public interface TextMessageMapper extends BaseMapper<TextMessage, TextMessageDto> {}
+public interface TextMessageMapper extends UnidirectionalMapper<TextMessage, TextMessageDto> {}
 
 @Mapper(componentModel = "spring")
-public interface ImageMessageMapper extends BaseMapper<ImageMessage, ImageMessageDto> {}
+public interface ImageMessageMapper extends UnidirectionalMapper<ImageMessage, ImageMessageDto> {}
 
 @Mapper(componentModel = "spring")
-public interface VideoMessageMapper extends BaseMapper<VideoMessage, VideoMessageDto> {}
+public interface VideoMessageMapper extends UnidirectionalMapper<VideoMessage, VideoMessageDto> {}
 ```
 ```
-TextMessage textMessage = mappingFacade.map(new TextMessageDto(), TextMessage.class);
-Message imageMessage = mappingFacade.map(new ImageMessageDto(), Message.class);
+TextMessageDto textMessageDto = mappingFacade.map(new TextMessage(), TextMessageDto.class);
+MessageDto imageMessageDto = mappingFacade.map(new ImageMessage(), MessageDto.class);
 MessageDto videoMessageDto = mappingFacade.map(new VideoMessage(), MessageDto.class);
 ```
 
-If MapStruct's default generated mappings are not enough, you can always write default implementations for BaseMapper's `map` and `mapReverse` methods when registering a mapping.
+If MapStruct's default generated mappings are not enough, you can always write default implementation for UnidirectionalMapper's `map` method when registering a mapping.
 Or even use MapStruct's decorators for some specific cases.
 
 
@@ -83,7 +83,7 @@ Maven (pom.xml)
     <dependency>
         <groupId>com.naharoo.commons</groupId>
         <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
-        <version>1.0.0</version>
+        <version>1.4.0</version>
     </dependency>
 </dependencies>
 
@@ -99,7 +99,7 @@ Maven (pom.xml)
                     <path>
                         <groupId>org.mapstruct</groupId>
                         <artifactId>mapstruct-processor</artifactId>
-                        <version>1.4.1.Final</version>
+                        <version>1.4.2.Final</version>
                     </path>
                 </annotationProcessorPaths>
             </configuration>
@@ -111,11 +111,11 @@ Maven (pom.xml)
 Gradle (build.gradle)
 ```
 dependencies {
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
-    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:1.0.0'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:1.4.0'
 }
 ```
-(Note: If you are also using Lombok, then it's annotation processor must be declared before MapStruct's annotation processor's declaration in Maven builds and after MapStruct's AP - in Gradle builds)
+(Note: If you are using Lombok, then you should also include `org.projectlombok:lombok-mapstruct-binding`)
 
 ### External Dependencies
 This library has only two dependencies:
