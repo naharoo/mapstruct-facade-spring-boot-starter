@@ -7,6 +7,7 @@ import org.springframework.util.StopWatch;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,12 @@ public class SimpleMappingFacade implements MappingFacade {
     private static void assertDestinationClass(final Class<?> destinationClass) {
         if (destinationClass == null) {
             throw new IllegalArgumentException("Mapping Destination class cannot be null");
+        }
+    }
+
+    private static void assertDestinationCustomizer(final Consumer<?> destinationCustomizer) {
+        if (destinationCustomizer == null) {
+            throw new IllegalArgumentException("Mapping Destination Customizer cannot be null");
         }
     }
 
@@ -116,6 +123,25 @@ public class SimpleMappingFacade implements MappingFacade {
 
     @PublicApi
     @Override
+    public <S, D> D map(
+            final S source,
+            final Class<D> destinationClass,
+            final Consumer<D> destinationCustomizer
+    ) {
+        assertDestinationCustomizer(destinationCustomizer);
+
+        final D destination = map(source, destinationClass);
+        if (destination == null) {
+            return null;
+        }
+
+        destinationCustomizer.accept(destination);
+
+        return destination;
+    }
+
+    @PublicApi
+    @Override
     public <S, D> List<D> mapAsList(final Collection<S> sources, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);
 
@@ -135,6 +161,23 @@ public class SimpleMappingFacade implements MappingFacade {
 
     @PublicApi
     @Override
+    public <S, D> List<D> mapAsList(
+            final Collection<S> sources,
+            final Class<D> destinationClass,
+            final Consumer<D> destinationCustomizer
+    ) {
+        assertDestinationCustomizer(destinationCustomizer);
+
+        final List<D> destinations = mapAsList(sources, destinationClass);
+        if (destinations == null) {
+            return null;
+        }
+
+        return destinations.stream().peek(destinationCustomizer).collect(Collectors.toList());
+    }
+
+    @PublicApi
+    @Override
     public <S, D> Set<D> mapAsSet(final Collection<S> sources, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);
 
@@ -150,6 +193,23 @@ public class SimpleMappingFacade implements MappingFacade {
                 .stream()
                 .map(source -> map(source, destinationClass))
                 .collect(Collectors.toSet());
+    }
+
+    @PublicApi
+    @Override
+    public <S, D> Set<D> mapAsSet(
+            final Collection<S> sources,
+            final Class<D> destinationClass,
+            final Consumer<D> destinationCustomizer
+    ) {
+        assertDestinationCustomizer(destinationCustomizer);
+
+        final Set<D> destinations = mapAsSet(sources, destinationClass);
+        if (destinations == null) {
+            return null;
+        }
+
+        return destinations.stream().peek(destinationCustomizer).collect(Collectors.toSet());
     }
 
     @PublicApi

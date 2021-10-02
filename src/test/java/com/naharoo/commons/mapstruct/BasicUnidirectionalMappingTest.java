@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ComponentScan("com.naharoo.commons.mapstruct.mapper.unidirectional.basic")
-public class BasicUnidirectionalMappingTest extends AbstractMappingTest {
+class BasicUnidirectionalMappingTest extends AbstractMappingTest {
 
     @Test
     @DisplayName("When mappings are configured, S -> D mapping should be successful")

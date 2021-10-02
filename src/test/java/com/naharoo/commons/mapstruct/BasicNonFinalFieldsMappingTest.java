@@ -6,15 +6,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentScan("com.naharoo.commons.mapstruct.mapper.basic.nonfinalfields")
-public class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
+class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
 
     @Test
     @DisplayName("When mappings are configured, S -> D mapping should map all fields")
@@ -84,6 +81,33 @@ public class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     }
 
     @Test
+    @DisplayName("When mappings are configured, Set<S> -> Set<D> mapping with destination customizations should map all fields and successfully apply customization")
+    void mapMapSetOfDToSetOfSWithCustomizer() {
+        // Given
+        final Set<Address> addresses = new HashSet<>();
+        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        final String country = UUID.randomUUID().toString();
+
+        // When
+        final Set<AddressDto> addressDtos = mappingFacade.mapAsSet(
+                addresses,
+                AddressDto.class,
+                destination -> destination.setCountry(country)
+        );
+
+        // Then
+        assertThat(addressDtos).isNotNull().isNotEmpty().size().isEqualTo(addresses.size());
+
+        addresses.forEach(address -> assertThat(addressDtos.contains(new AddressDto(
+                country,
+                address.getCity(),
+                address.getPostalCode()
+        ))).isTrue());
+    }
+
+    @Test
     @DisplayName("When mappings are configured, List<D> -> List<S> mapping should map all fields")
     void testMapListOfDToListOfS() {
         // Given
@@ -103,6 +127,36 @@ public class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
             final Address address = addresses.get(i);
             final AddressDto addressDto = addressDtos.get(i);
             assertThat(addressDto.getCountry()).isEqualTo(address.getCountry());
+            assertThat(addressDto.getCity()).isEqualTo(address.getCity());
+            assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
+        }
+    }
+
+    @Test
+    @DisplayName("When mappings are configured, List<D> -> List<S> mapping with destination customizations should map all fields and successfully apply customization")
+    void testMapListOfDToListOfSWithCustomization() {
+        // Given
+        final List<AddressDto> addressDtos = Arrays.asList(
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+        );
+        final String country = UUID.randomUUID().toString();
+
+        // When
+        final List<Address> addresses = mappingFacade.mapAsList(
+                addressDtos,
+                Address.class,
+                destination -> destination.setCountry(country)
+        );
+
+        // Then
+        assertThat(addresses).isNotNull().isNotEmpty().size().isEqualTo(addressDtos.size());
+
+        for (int i = 0; i < addresses.size(); i++) {
+            final Address address = addresses.get(i);
+            final AddressDto addressDto = addressDtos.get(i);
+            assertThat(country).isEqualTo(address.getCountry());
             assertThat(addressDto.getCity()).isEqualTo(address.getCity());
             assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
         }
@@ -156,5 +210,30 @@ public class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
             assertThat(addressDto.getCity()).isEqualTo(address.getCity());
             assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
         }
+    }
+
+    @Test
+    @DisplayName("When mappings are configured, S -> D mapping with destination customizations should map all fields and successfully apply customization")
+    void testMapSToDWithDestinationCustomization() {
+        // Given
+        final Address address = new Address(
+                RANDOM.nextObject(String.class),
+                RANDOM.nextObject(String.class),
+                RANDOM.nextInt()
+        );
+        final String customizedCountry = UUID.randomUUID().toString();
+
+        // When
+        final AddressDto addressDto = mappingFacade.map(
+                address,
+                AddressDto.class,
+                dto -> dto.setCountry(customizedCountry)
+        );
+
+        // Then
+        assertThat(addressDto).isNotNull();
+        assertThat(addressDto.getCountry()).isEqualTo(customizedCountry);
+        assertThat(addressDto.getCity()).isEqualTo(address.getCity());
+        assertThat(addressDto.getPostalCode()).isEqualTo(address.getPostalCode());
     }
 }
