@@ -4,7 +4,7 @@
 
     <groupId>com.naharoo.commons</groupId>
     <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0-SNAPSHOT</version>
 
     <name>MapStruct Mapping Facade</name>
     <description>Mapping Facade for popular MapStruct library mappers in Spring Boot environment</description>
