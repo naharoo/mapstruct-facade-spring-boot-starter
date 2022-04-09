@@ -2,5 +2,6 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
+
     <logger name="com.naharoo.commons.mapstruct" level="TRACE"/>
 </configuration>
