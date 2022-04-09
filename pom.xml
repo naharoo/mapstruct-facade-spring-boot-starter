@@ -55,6 +55,7 @@
     <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     <skip.spotless.scan>false</skip.spotless.scan>
     <spotless-maven-plugin.version>2.17.2</spotless-maven-plugin.version>
+    <javassist.version>3.28.0-GA</javassist.version>
   </properties>
 
   <dependencies>
@@ -67,6 +68,12 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
       <version>${spring.boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.javassist</groupId>
+      <artifactId>javassist</artifactId>
+      <version>${javassist.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

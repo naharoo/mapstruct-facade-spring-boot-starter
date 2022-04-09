@@ -1,13 +1,15 @@
 package com.naharoo.commons.mapstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.naharoo.commons.mapstruct.ClassUtils.isProxy;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.UnaryOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @PrivateApi
 public final class MappingsRegistry {
@@ -59,7 +61,7 @@ public final class MappingsRegistry {
         if (identifier == null) {
             throw new IllegalArgumentException("Cannot get a Mapping with null Identifier");
         }
-        return MAPPINGS.get(identifier);
+        return retrieveInternal(identifier.getSource(), identifier.getDestination());
     }
 
     @PrivateApi
@@ -85,5 +87,44 @@ public final class MappingsRegistry {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Done clearing MappingsRegistry. All registered mappings are removed");
         }
+    }
+
+    private static UnaryOperator<Object> retrieveInternal(final Class<?> sourceClass, final Class<?> destinationClass) {
+        final Optional<UnaryOperator<Object>> functionOpt = findMappingFunction(sourceClass, destinationClass);
+        if (functionOpt.isPresent()) {
+            return functionOpt.get();
+        }
+
+        if (!isProxy(sourceClass)) {
+            return null;
+        }
+
+        // If the source class is a Proxy, we need to traverse and check parents tree
+        // Here we're checking the superclass, mainly for CGLib Proxies
+        final Class<?> sourceSuperclass = sourceClass.getSuperclass();
+        if (sourceSuperclass != null) {
+            final Optional<UnaryOperator<Object>> mappingFunctionOpt = findMappingFunction(sourceSuperclass, destinationClass);
+            if (mappingFunctionOpt.isPresent()) {
+                return mappingFunctionOpt.get();
+            }
+        }
+
+        // Here we're checking superinterfaces, mainly for Dynamic Proxies
+        final Class<?>[] sourceInterfaces = sourceClass.getInterfaces();
+        for (final Class<?> sourceInterface : sourceInterfaces) {
+            final Optional<UnaryOperator<Object>> mappingFunctionOpt = findMappingFunction(
+                sourceInterface,
+                destinationClass
+            );
+            if (mappingFunctionOpt.isPresent()) {
+                return mappingFunctionOpt.get();
+            }
+        }
+
+        return null;
+    }
+
+    private static Optional<UnaryOperator<Object>> findMappingFunction(final Class<?> sourceClass, final Class<?> destinationClass) {
+        return Optional.ofNullable(MAPPINGS.get(MappingIdentifier.from(sourceClass, destinationClass)));
     }
 }
