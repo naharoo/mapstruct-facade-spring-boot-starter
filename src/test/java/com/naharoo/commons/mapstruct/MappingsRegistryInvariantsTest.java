@@ -21,7 +21,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> MappingsRegistry.register(identifier, mapping)
+            () -> MappingsRegistry.register(identifier, mapping)
         );
 
         // Then
@@ -37,7 +37,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> MappingsRegistry.register(identifier, mapping)
+            () -> MappingsRegistry.register(identifier, mapping)
         );
 
         // Then
@@ -52,7 +52,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> MappingsRegistry.retrieve(identifier)
+            () -> MappingsRegistry.retrieve(identifier)
         );
 
         // Then
@@ -67,7 +67,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> MappingsRegistry.exists(identifier)
+            () -> MappingsRegistry.exists(identifier)
         );
 
         // Then

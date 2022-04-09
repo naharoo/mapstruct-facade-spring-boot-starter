@@ -8,5 +8,4 @@ import org.mapstruct.Mapper;
 import static com.naharoo.commons.mapstruct.BaseMapper.SPRING_COMPONENT_MODEL;
 
 @Mapper(componentModel = SPRING_COMPONENT_MODEL)
-public interface AnimalMapper extends BaseMapper<WeekDay, WeekDayDto> {
-}
+public interface AnimalMapper extends BaseMapper<WeekDay, WeekDayDto> {}

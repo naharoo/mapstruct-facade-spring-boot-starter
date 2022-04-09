@@ -58,7 +58,7 @@ final class MappingIdentifier {
     @Override
     public String toString() {
         return "MappingIdentifier{" + "source=" + source +
-                ", destination=" + destination +
-                '}';
+            ", destination=" + destination +
+            '}';
     }
 }

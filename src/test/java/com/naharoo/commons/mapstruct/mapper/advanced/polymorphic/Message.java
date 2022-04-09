@@ -6,8 +6,8 @@ public abstract class Message {
     private final MessageType type;
 
     public Message(
-            final Long id,
-            final MessageType type
+        final Long id,
+        final MessageType type
     ) {
         this.id = id;
         this.type = type;

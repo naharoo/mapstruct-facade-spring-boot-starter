@@ -24,24 +24,24 @@ public class SimpleMappingFacade implements MappingFacade {
     private static void logMappingEntranceTraceLog(final Object source, final Class<?> destinationClass) {
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace(
-                    "Trying to map Object of type '{}' into '{}'...",
-                    source == null ? "null" : source.getClass().getSimpleName(),
-                    destinationClass.getSimpleName()
+                "Trying to map Object of type '{}' into '{}'...",
+                source == null ? "null" : source.getClass().getSimpleName(),
+                destinationClass.getSimpleName()
             );
         }
     }
 
     private static void logExitingDebugLog(
-            final String sourceSimpleName,
-            final String destinationSimpleName,
-            final long totalTimeMillis
+        final String sourceSimpleName,
+        final String destinationSimpleName,
+        final long totalTimeMillis
     ) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(
-                    "Successfully mapped Object of type '{}' into '{}' in {}ms.",
-                    sourceSimpleName,
-                    destinationSimpleName,
-                    totalTimeMillis
+                "Successfully mapped Object of type '{}' into '{}' in {}ms.",
+                sourceSimpleName,
+                destinationSimpleName,
+                totalTimeMillis
             );
         }
     }
@@ -64,8 +64,8 @@ public class SimpleMappingFacade implements MappingFacade {
 
     private static <D> Class<?> wrapIfNeeded(final Class<D> destinationClass) {
         return destinationClass.isPrimitive()
-               ? wrapPrimitive(destinationClass)
-               : destinationClass;
+            ? wrapPrimitive(destinationClass)
+            : destinationClass;
     }
 
     @PublicApi
@@ -114,7 +114,8 @@ public class SimpleMappingFacade implements MappingFacade {
             throw new MappingNotFoundException(sourceClass, destinationClass);
         }
 
-        @SuppressWarnings("unchecked") final D result = (D) function.apply(source);
+        @SuppressWarnings("unchecked")
+        final D result = (D) function.apply(source);
 
         stopWatch.stop();
         logExitingDebugLog(sourceSimpleName, destinationSimpleName, stopWatch.getTotalTimeMillis());
@@ -124,9 +125,9 @@ public class SimpleMappingFacade implements MappingFacade {
     @PublicApi
     @Override
     public <S, D> D map(
-            final S source,
-            final Class<D> destinationClass,
-            final Consumer<D> destinationCustomizer
+        final S source,
+        final Class<D> destinationClass,
+        final Consumer<D> destinationCustomizer
     ) {
         assertDestinationCustomizer(destinationCustomizer);
 
@@ -153,18 +154,15 @@ public class SimpleMappingFacade implements MappingFacade {
             return new ArrayList<>();
         }
 
-        return sources
-                .stream()
-                .map(source -> map(source, destinationClass))
-                .collect(Collectors.toList());
+        return sources.stream().map(source -> map(source, destinationClass)).collect(Collectors.toList());
     }
 
     @PublicApi
     @Override
     public <S, D> List<D> mapAsList(
-            final Collection<S> sources,
-            final Class<D> destinationClass,
-            final Consumer<D> destinationCustomizer
+        final Collection<S> sources,
+        final Class<D> destinationClass,
+        final Consumer<D> destinationCustomizer
     ) {
         assertDestinationCustomizer(destinationCustomizer);
 
@@ -189,18 +187,15 @@ public class SimpleMappingFacade implements MappingFacade {
             return new HashSet<>();
         }
 
-        return sources
-                .stream()
-                .map(source -> map(source, destinationClass))
-                .collect(Collectors.toSet());
+        return sources.stream().map(source -> map(source, destinationClass)).collect(Collectors.toSet());
     }
 
     @PublicApi
     @Override
     public <S, D> Set<D> mapAsSet(
-            final Collection<S> sources,
-            final Class<D> destinationClass,
-            final Consumer<D> destinationCustomizer
+        final Collection<S> sources,
+        final Class<D> destinationClass,
+        final Consumer<D> destinationCustomizer
     ) {
         assertDestinationCustomizer(destinationCustomizer);
 

@@ -28,13 +28,16 @@ public interface MappingFacade {
     /**
      * Maps <code>source</code> object into <code>destinationClass</code> type.
      *
-     * @param source           Original source Object which will be mapped into <code>destinationClass</code>
-     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target type
+     * @param source           Original source Object which will be mapped into
+     *                         <code>destinationClass</code>
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve
+     *                         target type
      * @param <S>              Original source Object's Java type
      * @param <D>              Mapping destination Object's Java type
      * @return mapped destination object or null, if provided <code>source</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> D map(@Nullable S source, @NonNull Class<D> destinationClass);
@@ -43,15 +46,19 @@ public interface MappingFacade {
      * Maps <code>source</code> object into <code>destinationClass</code> type. Afterwards, applies the
      * provided customization on the destination.
      *
-     * @param source                Original source Object which will be mapped into <code>destinationClass</code>
-     * @param destinationClass      <code>destinationClass</code> which is used as a metadata to resolve target type
-     * @param destinationCustomizer <code>destinationCustomizer</code> which will be applied to the destination
+     * @param source                Original source Object which will be mapped into
+     *                              <code>destinationClass</code>
+     * @param destinationClass      <code>destinationClass</code> which is used as a metadata to resolve
+     *                              target type
+     * @param destinationCustomizer <code>destinationCustomizer</code> which will be applied to the
+     *                              destination
      * @param <S>                   Original source Object's Java type
      * @param <D>                   Mapping destination Object's Java type
      * @return mapped destination object or null, if provided <code>source</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
      * @throws IllegalArgumentException if <code>destinationCustomizer</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> D map(@Nullable S source, @NonNull Class<D> destinationClass, @NonNull Consumer<D> destinationCustomizer);
@@ -59,107 +66,130 @@ public interface MappingFacade {
     /**
      * Maps <code>sources</code> list into a list of objects having <code>destinationClass</code> type.
      *
-     * @param sources          Original list of source Objects which will be mapped into a list of objects having
+     * @param sources          Original list of source Objects which will be mapped into a list of
+     *                         objects having
      *                         <code>destinationClass</code> type
-     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target Lists
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve
+     *                         target Lists
      *                         generic type
      * @param <S>              Original source Objects List's Java generic type
      * @param <D>              Mapping destination Objects List's Java generic type
      * @return mapped destination objects list or null, if provided <code>sources</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> List<D> mapAsList(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
 
     /**
-     * Maps <code>sources</code> collection into a list of objects having <code>destinationClass</code> type.
+     * Maps <code>sources</code> collection into a list of objects having <code>destinationClass</code>
+     * type.
      * Afterwards, applies the provided customization on destinations.
      *
-     * @param sources               Original list of source Objects which will be mapped into a list of objects having
+     * @param sources               Original list of source Objects which will be mapped into a list of
+     *                              objects having
      *                              <code>destinationClass</code> type
-     * @param destinationClass      <code>destinationClass</code> which is used as a metadata to resolve target Lists
+     * @param destinationClass      <code>destinationClass</code> which is used as a metadata to resolve
+     *                              target Lists
      *                              generic type
-     * @param destinationCustomizer <code>destinationCustomizer</code> which will be applied to destinations
+     * @param destinationCustomizer <code>destinationCustomizer</code> which will be applied to
+     *                              destinations
      * @param <S>                   Original source Objects List's Java generic type
      * @param <D>                   Mapping destination Objects List's Java generic type
      * @return mapped destination objects list or null, if provided <code>sources</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> List<D> mapAsList(
-            @Nullable Collection<S> sources,
-            @NonNull Class<D> destinationClass,
-            @NonNull Consumer<D> destinationCustomizer
+        @Nullable Collection<S> sources,
+        @NonNull Class<D> destinationClass,
+        @NonNull Consumer<D> destinationCustomizer
     );
 
     /**
      * Maps <code>sources</code> set into a set of objects having <code>destinationClass</code> type.
      *
-     * @param sources          Original set of source Objects which will be mapped into a set of objects having
+     * @param sources          Original set of source Objects which will be mapped into a set of objects
+     *                         having
      *                         <code>destinationClass</code> type
-     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target Sets
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve
+     *                         target Sets
      *                         generic type
      * @param <S>              Original source Objects Set's Java generic type
      * @param <D>              Mapping destination Objects Set's Java generic type
      * @return mapped destination objects set or null, if provided <code>sources</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> Set<D> mapAsSet(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
 
     /**
-     * Maps <code>sources</code> collection into a set of objects having <code>destinationClass</code> type.
+     * Maps <code>sources</code> collection into a set of objects having <code>destinationClass</code>
+     * type.
      * Afterwards, applies the provided customization on destinations.
      *
-     * @param sources               Original set of source Objects which will be mapped into a set of objects having
+     * @param sources               Original set of source Objects which will be mapped into a set of
+     *                              objects having
      *                              <code>destinationClass</code> type
-     * @param destinationClass      <code>destinationClass</code> which is used as a metadata to resolve target Sets
+     * @param destinationClass      <code>destinationClass</code> which is used as a metadata to resolve
+     *                              target Sets
      *                              generic type
-     * @param destinationCustomizer <code>destinationCustomizer</code> which will be applied to destinations
+     * @param destinationCustomizer <code>destinationCustomizer</code> which will be applied to
+     *                              destinations
      * @param <S>                   Original source Objects Set's Java generic type
      * @param <D>                   Mapping destination Objects Set's Java generic type
      * @return mapped destination objects set or null, if provided <code>sources</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> Set<D> mapAsSet(
-            @Nullable Collection<S> sources,
-            @NonNull Class<D> destinationClass,
-            @NonNull Consumer<D> destinationCustomizer
+        @Nullable Collection<S> sources,
+        @NonNull Class<D> destinationClass,
+        @NonNull Consumer<D> destinationCustomizer
     );
 
     /**
      * Maps <code>sources</code> set into an array of objects having <code>destinationClass</code> type.
      *
-     * @param sources          Original collection of source Objects which will be mapped into an array of objects having
+     * @param sources          Original collection of source Objects which will be mapped into an array
+     *                         of objects having
      *                         <code>destinationClass</code> type
-     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target Arrays
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve
+     *                         target Arrays
      *                         generic type
      * @param <S>              Original source Objects Collection's Java generic type
      * @param <D>              Mapping destination Objects Array's Java generic type
      * @return mapped destination objects array or null, if provided <code>sources</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> D[] mapAsArray(@Nullable Collection<S> sources, @NonNull Class<D> destinationClass);
 
     /**
-     * Maps <code>sources</code> array into an array of objects having <code>destinationClass</code> type.
+     * Maps <code>sources</code> array into an array of objects having <code>destinationClass</code>
+     * type.
      *
-     * @param sources          Original array of source Objects which will be mapped into an array of objects having
+     * @param sources          Original array of source Objects which will be mapped into an array of
+     *                         objects having
      *                         <code>destinationClass</code> type
-     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve target Arrays
+     * @param destinationClass <code>destinationClass</code> which is used as a metadata to resolve
+     *                         target Arrays
      *                         generic type
      * @param <S>              Original source Objects Array's Java generic type
      * @param <D>              Mapping destination Objects Array's Java generic type
      * @return mapped destination objects array or null, if provided <code>sources</code> was also null
      * @throws IllegalArgumentException if <code>destinationClass</code> is null
-     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping registered
+     * @throws MappingNotFoundException if there is no <code>S</code> -> <code>D</code> mapping
+     *                                  registered
      */
     @PublicApi
     <S, D> D[] mapAsArray(@Nullable S[] sources, @NonNull Class<D> destinationClass);

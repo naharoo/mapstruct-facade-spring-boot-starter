@@ -6,8 +6,8 @@ public abstract class MessageDto {
     private final MessageTypeDto type;
 
     public MessageDto(
-            final Long id,
-            final MessageTypeDto type
+        final Long id,
+        final MessageTypeDto type
     ) {
         this.id = id;
         this.type = type;

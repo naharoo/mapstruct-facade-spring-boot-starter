@@ -6,5 +6,4 @@ import org.mapstruct.Mapper;
 import static com.naharoo.commons.mapstruct.BaseMapper.SPRING_COMPONENT_MODEL;
 
 @Mapper(componentModel = SPRING_COMPONENT_MODEL)
-public interface CarTypeMapper extends BaseMapper<CarType, CarTypeDto> {
-}
+public interface CarTypeMapper extends BaseMapper<CarType, CarTypeDto> {}

@@ -18,15 +18,17 @@ class MappingNotFoundExceptionTest {
         final MappingNotFoundException exception = new MappingNotFoundException(sourceClass, destinationClass);
 
         // When
-        final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(() -> {
-            throw exception;
-        });
+        final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
+            () -> {
+                throw exception;
+            }
+        );
 
         // Then
-        throwableAssert
-                .isNotNull()
-                .isInstanceOf(MappingNotFoundException.class)
-                .hasMessageContainingAll(sourceClass.getSimpleName(), destinationClass.getSimpleName());
+        throwableAssert.isNotNull().isInstanceOf(MappingNotFoundException.class).hasMessageContainingAll(
+            sourceClass.getSimpleName(),
+            destinationClass.getSimpleName()
+        );
         assertThat(exception.getSourceClass()).isEqualTo(sourceClass);
         assertThat(exception.getDestinationClass()).isEqualTo(destinationClass);
     }

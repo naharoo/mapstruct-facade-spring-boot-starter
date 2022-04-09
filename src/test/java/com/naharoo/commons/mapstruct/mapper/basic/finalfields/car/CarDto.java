@@ -12,12 +12,12 @@ public final class CarDto {
     private final double weight;
 
     public CarDto(
-            final Long id,
-            final String make,
-            final CarTypeDto type,
-            final int year,
-            final BigDecimal price,
-            final double weight
+        final Long id,
+        final String make,
+        final CarTypeDto type,
+        final int year,
+        final BigDecimal price,
+        final double weight
     ) {
         this.id = id;
         this.make = make;

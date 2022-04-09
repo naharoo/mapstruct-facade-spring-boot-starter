@@ -10,5 +10,4 @@ import java.lang.annotation.RetentionPolicy;
 @PrivateApi
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-public @interface PrivateApi {
-}
+public @interface PrivateApi {}

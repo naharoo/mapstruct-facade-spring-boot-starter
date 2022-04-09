@@ -39,7 +39,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> mappingFacade.map(source, destinationClass)
+            () -> mappingFacade.map(source, destinationClass)
         );
 
         // Then
@@ -69,7 +69,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> mappingFacade.mapAsSet(source, destinationClass)
+            () -> mappingFacade.mapAsSet(source, destinationClass)
         );
 
         // Then
@@ -112,7 +112,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> mappingFacade.mapAsList(source, destinationClass)
+            () -> mappingFacade.mapAsList(source, destinationClass)
         );
 
         // Then
@@ -155,7 +155,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> mappingFacade.mapAsArray(sources, destinationClass)
+            () -> mappingFacade.mapAsArray(sources, destinationClass)
         );
 
         // Then
@@ -185,7 +185,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> mappingFacade.map(animal, destinationClass)
+            () -> mappingFacade.map(animal, destinationClass)
         );
 
         // Then

@@ -20,7 +20,7 @@ class MappingIdentifierTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> MappingIdentifier.from(source, destination)
+            () -> MappingIdentifier.from(source, destination)
         );
 
         // Then
@@ -36,7 +36,7 @@ class MappingIdentifierTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-                () -> MappingIdentifier.from(source, destination)
+            () -> MappingIdentifier.from(source, destination)
         );
 
         // Then
@@ -86,20 +86,12 @@ class MappingIdentifierTest {
         final MappingIdentifier thirdIdentifier = MappingIdentifier.from(source, void.class);
 
         // Then
-        assertThat(firstIdentifier)
-                .isNotNull()
-                .isSameAs(firstIdentifier)
-                .isNotSameAs(secondIdentifier)
-                .isEqualTo(firstIdentifier)
-                .isEqualTo(secondIdentifier)
-                .isNotEqualTo(null)
-                .isNotEqualTo(thirdIdentifier)
-                .hasSameHashCodeAs(secondIdentifier);
-        assertThat(firstIdentifier.toString())
-                .isNotNull()
-                .contains(source.getSimpleName())
-                .contains(destination.getSimpleName())
-                .isEqualTo(secondIdentifier.toString());
+        assertThat(firstIdentifier).isNotNull().isSameAs(firstIdentifier).isNotSameAs(secondIdentifier).isEqualTo(firstIdentifier).isEqualTo(
+            secondIdentifier
+        ).isNotEqualTo(null).isNotEqualTo(thirdIdentifier).hasSameHashCodeAs(secondIdentifier);
+        assertThat(firstIdentifier.toString()).isNotNull().contains(source.getSimpleName()).contains(destination.getSimpleName()).isEqualTo(
+            secondIdentifier.toString()
+        );
     }
 
     @SuppressWarnings("EqualsWithItself")

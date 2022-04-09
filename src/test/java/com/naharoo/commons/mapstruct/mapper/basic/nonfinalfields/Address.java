@@ -52,8 +52,8 @@ public class Address {
         }
         final Address address = (Address) o;
         return postalCode == address.postalCode &&
-                Objects.equals(country, address.country) &&
-                Objects.equals(city, address.city);
+            Objects.equals(country, address.country) &&
+            Objects.equals(city, address.city);
     }
 
     @Override

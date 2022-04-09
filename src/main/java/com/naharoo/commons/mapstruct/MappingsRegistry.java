@@ -20,8 +20,8 @@ public final class MappingsRegistry {
     }
 
     private static void logUnidirectionalMappingRegistrationTrace(
-            final String sourceSimpleName,
-            final String destinationSimpleName
+        final String sourceSimpleName,
+        final String destinationSimpleName
     ) {
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace("Registering {} -> {} mapping...", sourceSimpleName, destinationSimpleName);
@@ -29,8 +29,8 @@ public final class MappingsRegistry {
     }
 
     private static void logUnidirectionalMappingRegistrationDebug(
-            final String sourceSimpleName,
-            final String destinationSimpleName
+        final String sourceSimpleName,
+        final String destinationSimpleName
     ) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Registered {} -> {} mapping", sourceSimpleName, destinationSimpleName);

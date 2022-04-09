@@ -8,11 +8,13 @@ public final class MappingNotFoundException extends RuntimeException {
 
     @PublicApi
     public MappingNotFoundException(final Class<?> sourceClass, final Class<?> destinationClass) {
-        super(String.format(
+        super(
+            String.format(
                 "There is no Mapping registered for %s -> %s conversions.",
                 sourceClass.getSimpleName(),
                 destinationClass.getSimpleName()
-        ));
+            )
+        );
         this.sourceClass = sourceClass;
         this.destinationClass = destinationClass;
     }

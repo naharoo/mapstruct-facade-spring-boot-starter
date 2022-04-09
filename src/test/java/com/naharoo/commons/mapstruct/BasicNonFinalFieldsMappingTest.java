@@ -18,9 +18,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapSToD() {
         // Given
         final Address address = new Address(
-                RANDOM.nextObject(String.class),
-                RANDOM.nextObject(String.class),
-                RANDOM.nextInt()
+            RANDOM.nextObject(String.class),
+            RANDOM.nextObject(String.class),
+            RANDOM.nextInt()
         );
 
         // When
@@ -38,9 +38,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapDToS() {
         // Given
         final AddressDto addressDto = new AddressDto(
-                RANDOM.nextObject(String.class),
-                RANDOM.nextObject(String.class),
-                RANDOM.nextInt()
+            RANDOM.nextObject(String.class),
+            RANDOM.nextObject(String.class),
+            RANDOM.nextInt()
         );
 
         // When
@@ -68,20 +68,34 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
         // Then
         assertThat(addressDtos).isNotNull().isNotEmpty().size().isEqualTo(addresses.size());
 
-        addressDtos.forEach(dto -> assertThat(addresses.contains(new Address(
-                dto.getCountry(),
-                dto.getCity(),
-                dto.getPostalCode()
-        ))).isTrue());
-        addresses.forEach(address -> assertThat(addressDtos.contains(new AddressDto(
-                address.getCountry(),
-                address.getCity(),
-                address.getPostalCode()
-        ))).isTrue());
+        addressDtos.forEach(
+            dto -> assertThat(
+                addresses.contains(
+                    new Address(
+                        dto.getCountry(),
+                        dto.getCity(),
+                        dto.getPostalCode()
+                    )
+                )
+            ).isTrue()
+        );
+        addresses.forEach(
+            address -> assertThat(
+                addressDtos.contains(
+                    new AddressDto(
+                        address.getCountry(),
+                        address.getCity(),
+                        address.getPostalCode()
+                    )
+                )
+            ).isTrue()
+        );
     }
 
     @Test
-    @DisplayName("When mappings are configured, Set<S> -> Set<D> mapping with destination customizations should map all fields and successfully apply customization")
+    @DisplayName(
+        "When mappings are configured, Set<S> -> Set<D> mapping with destination customizations should map all fields and successfully apply customization"
+    )
     void mapMapSetOfDToSetOfSWithCustomizer() {
         // Given
         final Set<Address> addresses = new HashSet<>();
@@ -92,19 +106,25 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
 
         // When
         final Set<AddressDto> addressDtos = mappingFacade.mapAsSet(
-                addresses,
-                AddressDto.class,
-                destination -> destination.setCountry(country)
+            addresses,
+            AddressDto.class,
+            destination -> destination.setCountry(country)
         );
 
         // Then
         assertThat(addressDtos).isNotNull().isNotEmpty().size().isEqualTo(addresses.size());
 
-        addresses.forEach(address -> assertThat(addressDtos.contains(new AddressDto(
-                country,
-                address.getCity(),
-                address.getPostalCode()
-        ))).isTrue());
+        addresses.forEach(
+            address -> assertThat(
+                addressDtos.contains(
+                    new AddressDto(
+                        country,
+                        address.getCity(),
+                        address.getPostalCode()
+                    )
+                )
+            ).isTrue()
+        );
     }
 
     @Test
@@ -112,9 +132,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapListOfDToListOfS() {
         // Given
         final List<AddressDto> addressDtos = Arrays.asList(
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
         );
 
         // When
@@ -133,21 +153,23 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     }
 
     @Test
-    @DisplayName("When mappings are configured, List<D> -> List<S> mapping with destination customizations should map all fields and successfully apply customization")
+    @DisplayName(
+        "When mappings are configured, List<D> -> List<S> mapping with destination customizations should map all fields and successfully apply customization"
+    )
     void testMapListOfDToListOfSWithCustomization() {
         // Given
         final List<AddressDto> addressDtos = Arrays.asList(
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
         );
         final String country = UUID.randomUUID().toString();
 
         // When
         final List<Address> addresses = mappingFacade.mapAsList(
-                addressDtos,
-                Address.class,
-                destination -> destination.setCountry(country)
+            addressDtos,
+            Address.class,
+            destination -> destination.setCountry(country)
         );
 
         // Then
@@ -167,9 +189,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapCollectionOfDToArrayOfS() {
         // Given
         final List<AddressDto> addressDtos = Arrays.asList(
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
         );
 
         // When
@@ -192,9 +214,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapArrayOfDToArrayOfS() {
         // Given
         final AddressDto[] addressDtos = {
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-                new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
+            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
         };
 
         // When
@@ -213,21 +235,23 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     }
 
     @Test
-    @DisplayName("When mappings are configured, S -> D mapping with destination customizations should map all fields and successfully apply customization")
+    @DisplayName(
+        "When mappings are configured, S -> D mapping with destination customizations should map all fields and successfully apply customization"
+    )
     void testMapSToDWithDestinationCustomization() {
         // Given
         final Address address = new Address(
-                RANDOM.nextObject(String.class),
-                RANDOM.nextObject(String.class),
-                RANDOM.nextInt()
+            RANDOM.nextObject(String.class),
+            RANDOM.nextObject(String.class),
+            RANDOM.nextInt()
         );
         final String customizedCountry = UUID.randomUUID().toString();
 
         // When
         final AddressDto addressDto = mappingFacade.map(
-                address,
-                AddressDto.class,
-                dto -> dto.setCountry(customizedCountry)
+            address,
+            AddressDto.class,
+            dto -> dto.setCountry(customizedCountry)
         );
 
         // Then

@@ -34,8 +34,6 @@ public class OrganizationCountry {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", OrganizationCountry.class.getSimpleName() + "[", "]")
-                .add("name='" + name + "'")
-                .toString();
+        return new StringJoiner(", ", OrganizationCountry.class.getSimpleName() + "[", "]").add("name='" + name + "'").toString();
     }
 }

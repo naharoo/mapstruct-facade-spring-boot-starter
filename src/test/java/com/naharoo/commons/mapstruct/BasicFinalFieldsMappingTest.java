@@ -20,12 +20,12 @@ class BasicFinalFieldsMappingTest extends AbstractMappingTest {
     void testMap() {
         // Given
         final Car car = new Car(
-                RANDOM.nextLong(),
-                RANDOM.nextObject(String.class),
-                RANDOM.nextObject(CarType.class),
-                RANDOM.nextInt(),
-                RANDOM.nextObject(BigDecimal.class),
-                RANDOM.nextDouble()
+            RANDOM.nextLong(),
+            RANDOM.nextObject(String.class),
+            RANDOM.nextObject(CarType.class),
+            RANDOM.nextInt(),
+            RANDOM.nextObject(BigDecimal.class),
+            RANDOM.nextDouble()
         );
 
         // When
@@ -46,12 +46,12 @@ class BasicFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapReverse() {
         // Given
         final CarDto carDto = new CarDto(
-                RANDOM.nextLong(),
-                RANDOM.nextObject(String.class),
-                RANDOM.nextObject(CarTypeDto.class),
-                RANDOM.nextInt(),
-                RANDOM.nextObject(BigDecimal.class),
-                RANDOM.nextDouble()
+            RANDOM.nextLong(),
+            RANDOM.nextObject(String.class),
+            RANDOM.nextObject(CarTypeDto.class),
+            RANDOM.nextInt(),
+            RANDOM.nextObject(BigDecimal.class),
+            RANDOM.nextDouble()
         );
 
         // When

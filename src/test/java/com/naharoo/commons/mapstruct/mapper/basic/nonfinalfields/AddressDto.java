@@ -52,8 +52,8 @@ public class AddressDto {
         }
         final AddressDto that = (AddressDto) o;
         return postalCode == that.postalCode &&
-                Objects.equals(country, that.country) &&
-                Objects.equals(city, that.city);
+            Objects.equals(country, that.country) &&
+            Objects.equals(city, that.city);
     }
 
     @Override

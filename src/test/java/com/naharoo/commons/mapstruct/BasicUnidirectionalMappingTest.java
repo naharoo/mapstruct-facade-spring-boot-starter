@@ -33,8 +33,9 @@ class BasicUnidirectionalMappingTest extends AbstractMappingTest {
         final OrganizationDto organizationDto = RANDOM.nextObject(OrganizationDto.class);
 
         // When
-        final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(() -> mappingFacade
-                .map(organizationDto, Organization.class));
+        final AbstractThrowableAssert<
+            ?,
+            ? extends Throwable> throwableAssert = assertThatThrownBy(() -> mappingFacade.map(organizationDto, Organization.class));
 
         // Then
         throwableAssert.isNotNull().isInstanceOf(MappingNotFoundException.class);

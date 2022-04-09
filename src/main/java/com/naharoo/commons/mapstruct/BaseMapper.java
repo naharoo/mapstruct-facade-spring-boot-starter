@@ -5,53 +5,61 @@ package com.naharoo.commons.mapstruct;
  * <p>
  * All mappings which are supposed to be registered must:
  * <ol>
- *     <li>Be declared as interfaces</li>
- *     <li>Extend this interface</li>
- *     <li>Be annotated with {@link org.mapstruct.Mapper} annotation</li>
- *     <li>Declare <code>"spring"</code> as their {@link org.mapstruct.Mapper#componentModel()}</li>
+ * <li>Be declared as interfaces</li>
+ * <li>Extend this interface</li>
+ * <li>Be annotated with {@link org.mapstruct.Mapper} annotation</li>
+ * <li>Declare <code>"spring"</code> as their {@link org.mapstruct.Mapper#componentModel()}</li>
  * </ol>
  * </p>
  * <p>
- * MapStruct's annotation processor will generate corresponding implementations for those Mappers and annotate
- * them with {@link org.springframework.stereotype.Component} annotation.
- * Afterwards they will be picked up by {@link com.naharoo.commons.mapstruct.MappingsRegistrationBeanPostProcessor}
+ * MapStruct's annotation processor will generate corresponding implementations for those Mappers
+ * and annotate them with {@link org.springframework.stereotype.Component} annotation.
+ * Afterwards they will be picked up by
+ * {@link com.naharoo.commons.mapstruct.MappingsRegistrationBeanPostProcessor}
  * and registered in {@link com.naharoo.commons.mapstruct.MappingsRegistry}.
  * After registration, {@link com.naharoo.commons.mapstruct.MappingFacade} can use them.
  * </p>
  * <p>
  * Sample of usage:
- * <pre>{@code
- * @Mapper(componentModel = "spring")
- * public interface CarsMapper extends BaseMapper<Car, CarDto> {}
- * }</pre>
+ * 
+ * <pre>
+ * {
+ *     &#64;code
+ *     &#64;Mapper(componentModel = "spring")
+ *     public interface CarsMapper extends BaseMapper<Car, CarDto> {}
+ * }
+ * </pre>
  * </p>
  *
  * <p>
  * Mapping Polymorphic hierarchies, i.e. subtypes.
  * Here all concrete class mappings need to be registered.
  *
- * <pre>{@code
- * abstract class Message {}
- * class TextMessage extends Message {}
- * class ImageMessage extends Message {}
- * class VideoMessage extends Message {}
+ * <pre>
+ * {
+ *     &#64;code
+ *     abstract class Message {}
+ *     class TextMessage extends Message {}
+ *     class ImageMessage extends Message {}
+ *     class VideoMessage extends Message {}
  *
- * abstract class MessageDto {}
- * class TextMessageDto extends MessageDto {}
- * class ImageMessageDto extends MessageDto {}
- * class VideoMessageDto extends MessageDto {}
+ *     abstract class MessageDto {}
+ *     class TextMessageDto extends MessageDto {}
+ *     class ImageMessageDto extends MessageDto {}
+ *     class VideoMessageDto extends MessageDto {}
  *
- * @Mapper(componentModel = "spring")
- * public interface TextMessageMapper extends BaseMapper<TextMessage, TextMessageDto> {}
- * @Mapper(componentModel = "spring")
- * public interface ImageMessageMapper extends BaseMapper<ImageMessage, ImageMessageDto> {}
- * @Mapper(componentModel = "spring")
- * public interface VideoMessageMapper extends BaseMapper<VideoMessage, VideoMessageDto> {}
+ *     &#64;Mapper(componentModel = "spring")
+ *     public interface TextMessageMapper extends BaseMapper<TextMessage, TextMessageDto> {}
+ *     &#64;Mapper(componentModel = "spring")
+ *     public interface ImageMessageMapper extends BaseMapper<ImageMessage, ImageMessageDto> {}
+ *     &#64;Mapper(componentModel = "spring")
+ *     public interface VideoMessageMapper extends BaseMapper<VideoMessage, VideoMessageDto> {}
  *
- * TextMessage textMessage = mappingFacade.map(new TextMessageDto(), TextMessage.class);
- * Message imageMessage = mappingFacade.map(new ImageMessageDto(), Message.class);
- * MessageDto videoMessageDto = mappingFacade.map(new VideoMessage(), MessageDto.class);
- * }</pre>
+ *     TextMessage textMessage = mappingFacade.map(new TextMessageDto(), TextMessage.class);
+ *     Message imageMessage = mappingFacade.map(new ImageMessageDto(), Message.class);
+ *     MessageDto videoMessageDto = mappingFacade.map(new VideoMessage(), MessageDto.class);
+ * }
+ * </pre>
  * </p>
  *
  * <p>
@@ -60,8 +68,9 @@ package com.naharoo.commons.mapstruct;
  * </p>
  *
  * <p>
- * To customize the mapping algorithm, default implementations of {@link #map(S)} and {@link #mapReverse(D)}
- * can be used. Also MapStruct's {@link org.mapstruct.DecoratedWith} can be used in customization purposes.
+ * To customize the mapping algorithm, default implementations of {@link #map(S)} and
+ * {@link #mapReverse(D)} can be used.
+ * Also MapStruct's {@link org.mapstruct.DecoratedWith} can be used in customization purposes.
  * </p>
  *
  * <p>
@@ -85,5 +94,4 @@ package com.naharoo.commons.mapstruct;
  * @see org.mapstruct.DecoratedWith
  */
 @PublicApi
-public interface BaseMapper<S, D> extends BidirectionalMapper<S, D> {
-}
+public interface BaseMapper<S, D> extends BidirectionalMapper<S, D> {}

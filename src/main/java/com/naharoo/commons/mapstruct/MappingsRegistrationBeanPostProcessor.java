@@ -24,7 +24,8 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
     }
 
     private void processBidirectionalMapper(final Object bean) {
-        @SuppressWarnings("unchecked") final BidirectionalMapper<Object, Object> castedBean = (BidirectionalMapper<Object, Object>) bean;
+        @SuppressWarnings("unchecked")
+        final BidirectionalMapper<Object, Object> castedBean = (BidirectionalMapper<Object, Object>) bean;
 
         final Class<?> beanClass = bean.getClass();
         final Class<?>[] genericClasses = extractGenericParameters(beanClass, BidirectionalMapper.class);
@@ -40,7 +41,8 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
     }
 
     private void processUnidirectionalMapper(final Object bean) {
-        @SuppressWarnings("unchecked") final UnidirectionalMapper<Object, Object> castedBean = (UnidirectionalMapper<Object, Object>) bean;
+        @SuppressWarnings("unchecked")
+        final UnidirectionalMapper<Object, Object> castedBean = (UnidirectionalMapper<Object, Object>) bean;
 
         final Class<?> beanClass = bean.getClass();
         final Class<?>[] genericClasses = extractGenericParameters(beanClass, UnidirectionalMapper.class);

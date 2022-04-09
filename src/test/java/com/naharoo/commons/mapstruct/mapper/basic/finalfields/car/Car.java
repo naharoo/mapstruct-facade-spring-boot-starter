@@ -12,12 +12,12 @@ public final class Car {
     private final double weight;
 
     public Car(
-            final Long id,
-            final String make,
-            final CarType type,
-            final int year,
-            final BigDecimal price,
-            final double weight
+        final Long id,
+        final String make,
+        final CarType type,
+        final int year,
+        final BigDecimal price,
+        final double weight
     ) {
         this.id = id;
         this.make = make;

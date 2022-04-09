@@ -16,8 +16,8 @@ abstract class AbstractMappingTest {
     void initializeApplicationContext() {
         MappingsRegistry.clear();
         this.context = new AnnotationConfigApplicationContext(
-                MapstructMapperFacadeAutoConfiguration.class,
-                this.getClass()
+            MapstructMapperFacadeAutoConfiguration.class,
+            this.getClass()
         );
         this.mappingFacade = context.getBean(MappingFacade.class);
     }

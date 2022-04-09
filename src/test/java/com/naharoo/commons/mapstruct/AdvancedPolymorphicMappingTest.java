@@ -42,8 +42,10 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     }
 
     @Test
-    @DisplayName("When polymorphic mappings are set, all subtypes should be able to be mapped to " +
-            "concrete corresponding destinations")
+    @DisplayName(
+        "When polymorphic mappings are set, all subtypes should be able to be mapped to " +
+            "concrete corresponding destinations"
+    )
     void testMapDToS() {
         // Given
         final TextMessageDto textMessageDto = new TextMessageDto(RANDOM.nextLong(), RANDOM.nextObject(String.class));
@@ -64,8 +66,10 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     }
 
     @Test
-    @DisplayName("When polymorphic mappings are set and concrete-to-abstract mappings are cached, " +
-            "all subtypes should be able to be mapped to concrete corresponding destinations")
+    @DisplayName(
+        "When polymorphic mappings are set and concrete-to-abstract mappings are cached, " +
+            "all subtypes should be able to be mapped to concrete corresponding destinations"
+    )
     void testMapSToDAfterCaching() {
         // Given
         final TextMessage textMessage = new TextMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));

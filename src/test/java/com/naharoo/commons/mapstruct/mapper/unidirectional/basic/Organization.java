@@ -12,10 +12,10 @@ public class Organization {
     private final OrganizationType type;
 
     public Organization(
-            final UUID uuid,
-            final String name,
-            final OrganizationCountry country,
-            final OrganizationType type
+        final UUID uuid,
+        final String name,
+        final OrganizationCountry country,
+        final OrganizationType type
     ) {
         this.uuid = uuid;
         this.name = name;
@@ -58,11 +58,8 @@ public class Organization {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Organization.class.getSimpleName() + "[", "]")
-                .add("uuid=" + uuid)
-                .add("name='" + name + "'")
-                .add("country=" + country)
-                .add("type=" + type)
-                .toString();
+        return new StringJoiner(", ", Organization.class.getSimpleName() + "[", "]").add("uuid=" + uuid).add("name='" + name + "'").add(
+            "country=" + country
+        ).add("type=" + type).toString();
     }
 }

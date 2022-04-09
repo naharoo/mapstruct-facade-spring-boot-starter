@@ -12,10 +12,10 @@ public class OrganizationDto {
     private final OrganizationTypeDto type;
 
     public OrganizationDto(
-            final UUID uuid,
-            final String name,
-            final OrganizationCountryDto country,
-            final OrganizationTypeDto type
+        final UUID uuid,
+        final String name,
+        final OrganizationCountryDto country,
+        final OrganizationTypeDto type
     ) {
         this.uuid = uuid;
         this.name = name;
@@ -58,11 +58,8 @@ public class OrganizationDto {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", OrganizationDto.class.getSimpleName() + "[", "]")
-                .add("uuid=" + uuid)
-                .add("name='" + name + "'")
-                .add("country=" + country)
-                .add("type=" + type)
-                .toString();
+        return new StringJoiner(", ", OrganizationDto.class.getSimpleName() + "[", "]").add("uuid=" + uuid).add("name='" + name + "'").add(
+            "country=" + country
+        ).add("type=" + type).toString();
     }
 }
