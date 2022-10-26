@@ -100,7 +100,8 @@ public final class MappingsRegistry {
         }
 
         // If the source class is a Proxy, we need to traverse and check parents tree
-        // Here we're checking the superclass, mainly for CGLib Proxies
+        // Here we're checking the superclass
+        // Used for CGLib and Hibernate proxies
         final Class<?> sourceSuperclass = sourceClass.getSuperclass();
         if (sourceSuperclass != null) {
             final Optional<UnaryOperator<Object>> mappingFunctionOpt = findMappingFunction(sourceSuperclass, destinationClass);
@@ -109,7 +110,8 @@ public final class MappingsRegistry {
             }
         }
 
-        // Here we're checking superinterfaces, mainly for Dynamic Proxies
+        // Here we're checking superinterfaces
+        // Used for Dynamic and Javassist proxies
         final Class<?>[] sourceInterfaces = sourceClass.getInterfaces();
         for (final Class<?> sourceInterface : sourceInterfaces) {
             final Optional<UnaryOperator<Object>> mappingFunctionOpt = findMappingFunction(

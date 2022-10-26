@@ -1,5 +1,6 @@
 package com.naharoo.commons.mapstruct;
 
+import static net.bytebuddy.matcher.ElementMatchers.any;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.naharoo.commons.mapstruct.mapper.proxies.sourceclass.Laptop;
@@ -9,6 +10,12 @@ import java.lang.reflect.Proxy;
 import java.util.UUID;
 import javassist.util.proxy.ProxyFactory;
 import javassist.util.proxy.ProxyObject;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.dynamic.DynamicType.Builder;
+import net.bytebuddy.dynamic.DynamicType.Loaded;
+import net.bytebuddy.dynamic.DynamicType.Unloaded;
+import net.bytebuddy.implementation.InvocationHandlerAdapter;
+import org.hibernate.proxy.HibernateProxy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.cglib.proxy.Enhancer;
@@ -162,6 +169,49 @@ class ProxySourceClassMappingTest extends AbstractMappingTest {
             throw new UnsupportedOperationException("Not supported use-case");
         });
         final LaptopProxyAbstractClass proxySource = (LaptopProxyAbstractClass) instance;
+
+        // When
+        final Laptop result = mappingFacade.map(proxySource, Laptop.class);
+
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getBrand()).isEqualTo(brand);
+        assertThat(result.getName()).isEqualTo(name);
+    }
+
+    @Test
+    @DisplayName("When source is a Hibernate proxy class, S -> D mapping should map all proxy field values")
+    void testHibernateProxyClassSource() throws InstantiationException, IllegalAccessException {
+        // Given
+        final String brand = UUID.randomUUID().toString();
+        final String name = UUID.randomUUID().toString();
+
+        final ByteBuddy byteBuddy = new ByteBuddy();
+        Builder<LaptopProxyAbstractClass> builder = byteBuddy.subclass(LaptopProxyAbstractClass.class).implement(HibernateProxy.class).method(
+            any()
+        ).intercept(
+            InvocationHandlerAdapter.of((proxyObject, method, args) -> {
+                final String methodName = method.getName();
+                if (methodName.equals("writeReplace")) {
+                    return null;
+                }
+                if (methodName.equals("getHibernateLazyInitializer")) {
+                    return null;
+                }
+                if (methodName.equals("getBrand")) {
+                    return brand;
+                }
+                if (methodName.equals("getName")) {
+                    return name;
+                }
+                throw new UnsupportedOperationException("Not supported use-case");
+            })
+        );
+
+        final Unloaded<LaptopProxyAbstractClass> unloadedProxy = builder.make();
+        final Loaded<LaptopProxyAbstractClass> loadedProxy = unloadedProxy.load(this.getClass().getClassLoader());
+        final Class<? extends LaptopProxyAbstractClass> clazz = loadedProxy.getLoaded();
+        final LaptopProxyAbstractClass proxySource = clazz.newInstance();
 
         // When
         final Laptop result = mappingFacade.map(proxySource, Laptop.class);

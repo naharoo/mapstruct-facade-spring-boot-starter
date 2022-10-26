@@ -2,6 +2,7 @@ package com.naharoo.commons.mapstruct;
 
 import java.lang.reflect.Proxy;
 import javassist.util.proxy.ProxyFactory;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.core.GenericTypeResolver;
 
 @PrivateApi
@@ -15,7 +16,7 @@ public final class ClassUtils {
 
     @PrivateApi
     public static boolean isProxy(final Class<?> clazz) {
-        return isDynamicProxy(clazz) || isCglibProxy(clazz) || isJavassistProxy(clazz);
+        return isDynamicProxy(clazz) || isCglibProxy(clazz) || isJavassistProxy(clazz) || isHibernateProxy(clazz);
     }
 
     @PrivateApi
@@ -31,6 +32,11 @@ public final class ClassUtils {
     @PrivateApi
     public static boolean isJavassistProxy(final Class<?> clazz) {
         return clazz != null && isClassPresentInClasspath("javassist.util.proxy.ProxyFactory") && ProxyFactory.isProxyClass(clazz);
+    }
+
+    @PrivateApi
+    public static boolean isHibernateProxy(final Class<?> clazz) {
+        return clazz != null && isClassPresentInClasspath("org.hibernate.proxy.HibernateProxy") && HibernateProxy.class.isAssignableFrom(clazz);
     }
 
     @PrivateApi
