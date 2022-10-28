@@ -6,6 +6,12 @@ import java.lang.reflect.Proxy;
 import java.util.UUID;
 import javassist.util.proxy.ProxyFactory;
 import javassist.util.proxy.ProxyObject;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.dynamic.DynamicType.Builder;
+import net.bytebuddy.dynamic.DynamicType.Loaded;
+import net.bytebuddy.dynamic.DynamicType.Unloaded;
+import net.bytebuddy.implementation.FixedValue;
+import org.hibernate.proxy.HibernateProxy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.cglib.proxy.Enhancer;
@@ -134,6 +140,51 @@ class ClassUtilsTest {
     @Test
     @DisplayName("When null is provided, false should be returned")
     void isNotJavassistProxyWhenNull() {
+        // Given
+        final Class<Object> clazz = null;
+
+        // When
+        final boolean result = ClassUtils.isJavassistProxy(clazz);
+
+        // Then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("When a valid Hibernate proxy is provided, true should be returned")
+    void isHibernateProxy() {
+        // Given
+        final ByteBuddy byteBuddy = new ByteBuddy();
+        final Builder<HibernateProxy> builder = byteBuddy.subclass(HibernateProxy.class);
+        builder.method(m -> "writeReplace".equals(m.getName())).intercept(FixedValue.nullValue());
+        builder.method(m -> "getHibernateLazyInitializer".equals(m.getName())).intercept(FixedValue.nullValue());
+        final Unloaded<HibernateProxy> unloadedProxy = builder.make();
+        final Loaded<HibernateProxy> loadedProxy = unloadedProxy.load(this.getClass().getClassLoader());
+        final Class<? extends HibernateProxy> clazz = loadedProxy.getLoaded();
+
+        // When
+        final boolean result = ClassUtils.isHibernateProxy(clazz);
+
+        // Then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("When a not valid Hibernate proxy is provided, false should be returned")
+    void isNotHibernateProxy() {
+        // Given
+        final Class<Object> clazz = Object.class;
+
+        // When
+        final boolean result = ClassUtils.isJavassistProxy(clazz);
+
+        // Then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("When null is provided, false should be returned")
+    void isNotHibernateProxyWhenNull() {
         // Given
         final Class<Object> clazz = null;
 

@@ -55,6 +55,7 @@
     <skip.spotless.scan>false</skip.spotless.scan>
     <spotless-maven-plugin.version>2.17.2</spotless-maven-plugin.version>
     <javassist.version>3.28.0-GA</javassist.version>
+    <hibernate.version>5.6.7.Final</hibernate.version>
   </properties>
 
   <dependencies>
@@ -72,6 +73,12 @@
       <groupId>org.javassist</groupId>
       <artifactId>javassist</artifactId>
       <version>${javassist.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate.version}</version>
       <optional>true</optional>
     </dependency>
     <dependency>
