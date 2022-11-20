@@ -2,11 +2,15 @@ package com.naharoo.commons.mapstruct;
 
 import com.naharoo.commons.mapstruct.mapper.basic.nonfinalfields.Address;
 import com.naharoo.commons.mapstruct.mapper.basic.nonfinalfields.AddressDto;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,11 +21,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, S -> D mapping should map all fields")
     void testMapSToD() {
         // Given
-        final Address address = new Address(
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextInt()
-        );
+        final Address address = Instancio.create(Address.class);
 
         // When
         final AddressDto addressDto = mappingFacade.map(address, AddressDto.class);
@@ -37,11 +37,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, D -> S mapping should map all fields")
     void testMapDToS() {
         // Given
-        final AddressDto addressDto = new AddressDto(
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextInt()
-        );
+        final AddressDto addressDto = Instancio.create(AddressDto.class);
 
         // When
         final Address address = mappingFacade.map(addressDto, Address.class);
@@ -57,10 +53,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, Set<S> -> Set<D> mapping should map all fields")
     void mapMapSetOfDToSetOfS() {
         // Given
-        final Set<Address> addresses = new HashSet<>();
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        final Set<Address> addresses = Instancio.of(Address.class).stream().limit(3).collect(Collectors.toSet());
 
         // When
         final Set<AddressDto> addressDtos = mappingFacade.mapAsSet(addresses, AddressDto.class);
@@ -98,10 +91,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     )
     void mapMapSetOfDToSetOfSWithCustomizer() {
         // Given
-        final Set<Address> addresses = new HashSet<>();
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        final Set<Address> addresses = Instancio.of(Address.class).stream().limit(3).collect(Collectors.toSet());
         final String country = UUID.randomUUID().toString();
 
         // When
@@ -131,11 +121,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, List<D> -> List<S> mapping should map all fields")
     void testMapListOfDToListOfS() {
         // Given
-        final List<AddressDto> addressDtos = Arrays.asList(
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
-        );
+        final List<AddressDto> addressDtos = Instancio.of(AddressDto.class).stream().limit(3).collect(Collectors.toList());
 
         // When
         final List<Address> addresses = mappingFacade.mapAsList(addressDtos, Address.class);
@@ -158,11 +144,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     )
     void testMapListOfDToListOfSWithCustomization() {
         // Given
-        final List<AddressDto> addressDtos = Arrays.asList(
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
-        );
+        final List<AddressDto> addressDtos = Instancio.of(AddressDto.class).stream().limit(3).collect(Collectors.toList());
         final String country = UUID.randomUUID().toString();
 
         // When
@@ -188,11 +170,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, Collection<D> -> S[] mapping should map all fields")
     void testMapCollectionOfDToArrayOfS() {
         // Given
-        final List<AddressDto> addressDtos = Arrays.asList(
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
-        );
+        final List<AddressDto> addressDtos = Instancio.of(AddressDto.class).stream().limit(3).collect(Collectors.toList());
 
         // When
         final Address[] addresses = mappingFacade.mapAsArray(addressDtos, Address.class);
@@ -213,11 +191,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, D[] -> S[] mapping should map all fields")
     void testMapArrayOfDToArrayOfS() {
         // Given
-        final AddressDto[] addressDtos = {
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
-        };
+        final AddressDto[] addressDtos = Instancio.of(AddressDto.class).stream().limit(3).toArray(AddressDto[]::new);
 
         // When
         final Address[] addresses = mappingFacade.mapAsArray(addressDtos, Address.class);
@@ -240,11 +214,7 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     )
     void testMapSToDWithDestinationCustomization() {
         // Given
-        final Address address = new Address(
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextInt()
-        );
+        final Address address = Instancio.create(Address.class);
         final String customizedCountry = UUID.randomUUID().toString();
 
         // When

@@ -4,11 +4,10 @@ import com.naharoo.commons.mapstruct.mapper.basic.finalfields.car.Car;
 import com.naharoo.commons.mapstruct.mapper.basic.finalfields.car.CarDto;
 import com.naharoo.commons.mapstruct.mapper.basic.finalfields.car.CarType;
 import com.naharoo.commons.mapstruct.mapper.basic.finalfields.car.CarTypeDto;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
-
-import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,14 +18,7 @@ class BasicFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, S -> D mapping should map all fields")
     void testMap() {
         // Given
-        final Car car = new Car(
-            RANDOM.nextLong(),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(CarType.class),
-            RANDOM.nextInt(),
-            RANDOM.nextObject(BigDecimal.class),
-            RANDOM.nextDouble()
-        );
+        final Car car = Instancio.create(Car.class);
 
         // When
         final CarDto carDto = mappingFacade.map(car, CarDto.class);
@@ -45,14 +37,7 @@ class BasicFinalFieldsMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, D -> S mapping should map all fields")
     void testMapReverse() {
         // Given
-        final CarDto carDto = new CarDto(
-            RANDOM.nextLong(),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(CarTypeDto.class),
-            RANDOM.nextInt(),
-            RANDOM.nextObject(BigDecimal.class),
-            RANDOM.nextDouble()
-        );
+        final CarDto carDto = Instancio.create(CarDto.class);
 
         // When
         final Car car = mappingFacade.map(carDto, Car.class);

@@ -2,6 +2,7 @@ package com.naharoo.commons.mapstruct;
 
 import com.naharoo.commons.mapstruct.mapper.basic.cornercases.Animal;
 import org.assertj.core.api.AbstractThrowableAssert;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
@@ -180,7 +181,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
     @DisplayName("When mapping is not registered for S -> D, exception should be thrown")
     void testMappingNotRegisteredMap() {
         // Given
-        final Animal animal = new Animal(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final Animal animal = Instancio.create(Animal.class);
         final Class<?> destinationClass = StringBuilder.class;
 
         // When
