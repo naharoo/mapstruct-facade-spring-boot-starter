@@ -45,7 +45,7 @@
     <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
     <compiler.plugin.version>3.8.1</compiler.plugin.version>
     <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
-    <easy-random.version>4.2.0</easy-random.version>
+    <instancio.version>1.5.4</instancio.version>
     <jsr305.version>3.0.2</jsr305.version>
     <maven-scm-provider-gitexe.version>1.11.2</maven-scm-provider-gitexe.version>
     <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
@@ -94,9 +94,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.jeasy</groupId>
-      <artifactId>easy-random-core</artifactId>
-      <version>${easy-random.version}</version>
+      <groupId>org.instancio</groupId>
+      <artifactId>instancio-junit</artifactId>
+      <version>${instancio.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

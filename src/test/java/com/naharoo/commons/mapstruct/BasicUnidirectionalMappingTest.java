@@ -3,6 +3,7 @@ package com.naharoo.commons.mapstruct;
 import com.naharoo.commons.mapstruct.mapper.unidirectional.basic.Organization;
 import com.naharoo.commons.mapstruct.mapper.unidirectional.basic.OrganizationDto;
 import org.assertj.core.api.AbstractThrowableAssert;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +18,7 @@ class BasicUnidirectionalMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, S -> D mapping should be successful")
     void testMap() {
         // Given
-        final Organization organization = RANDOM.nextObject(Organization.class);
+        final Organization organization = Instancio.create(Organization.class);
 
         // When
         final OrganizationDto organizationDto = mappingFacade.map(organization, OrganizationDto.class);
@@ -30,7 +31,7 @@ class BasicUnidirectionalMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, D -> S mapping should throw MappingNotFoundException")
     void testMapReverse() {
         // Given
-        final OrganizationDto organizationDto = RANDOM.nextObject(OrganizationDto.class);
+        final OrganizationDto organizationDto = Instancio.create(OrganizationDto.class);
 
         // When
         final AbstractThrowableAssert<

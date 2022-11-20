@@ -1,6 +1,12 @@
 package com.naharoo.commons.mapstruct;
 
-import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.*;
+import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.ImageMessage;
+import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.ImageMessageDto;
+import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.Message;
+import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.MessageDto;
+import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.TextMessage;
+import com.naharoo.commons.mapstruct.mapper.advanced.polymorphic.TextMessageDto;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,8 +25,8 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     @DisplayName("When polymorphic mappings are set, all subtypes should be mapped S -> D as expected")
     void testMapListOfSToListOfD() {
         // Given
-        final TextMessage textMessage = new TextMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
-        final ImageMessage imageMessage = new ImageMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final TextMessage textMessage = Instancio.create(TextMessage.class);
+        final ImageMessage imageMessage = Instancio.create(ImageMessage.class);
         final List<Message> messages = Arrays.asList(textMessage, imageMessage);
 
         // When
@@ -48,8 +54,8 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     )
     void testMapDToS() {
         // Given
-        final TextMessageDto textMessageDto = new TextMessageDto(RANDOM.nextLong(), RANDOM.nextObject(String.class));
-        final ImageMessageDto imageMessageDto = new ImageMessageDto(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final TextMessageDto textMessageDto = Instancio.create(TextMessageDto.class);
+        final ImageMessageDto imageMessageDto = Instancio.create(ImageMessageDto.class);
 
         // When
         final TextMessage textMessage = mappingFacade.map(textMessageDto, TextMessage.class);
@@ -72,8 +78,8 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     )
     void testMapSToDAfterCaching() {
         // Given
-        final TextMessage textMessage = new TextMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
-        final ImageMessage imageMessage = new ImageMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final TextMessage textMessage = Instancio.create(TextMessage.class);
+        final ImageMessage imageMessage = Instancio.create(ImageMessage.class);
         final Set<Message> messages = new HashSet<>();
         messages.add(textMessage);
         messages.add(imageMessage);
