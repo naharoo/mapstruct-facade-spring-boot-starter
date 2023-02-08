@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.naharoo.commons.testingtoolkit.random.RandomizationSupport.randomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentScan("com.naharoo.commons.mapstruct.mapper.advanced.polymorphic")
@@ -19,8 +20,8 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     @DisplayName("When polymorphic mappings are set, all subtypes should be mapped S -> D as expected")
     void testMapListOfSToListOfD() {
         // Given
-        final TextMessage textMessage = new TextMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
-        final ImageMessage imageMessage = new ImageMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final TextMessage textMessage = new TextMessage(randomizer().long_(), randomizer().string());
+        final ImageMessage imageMessage = new ImageMessage(randomizer().long_(), randomizer().string());
         final List<Message> messages = Arrays.asList(textMessage, imageMessage);
 
         // When
@@ -48,8 +49,8 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     )
     void testMapDToS() {
         // Given
-        final TextMessageDto textMessageDto = new TextMessageDto(RANDOM.nextLong(), RANDOM.nextObject(String.class));
-        final ImageMessageDto imageMessageDto = new ImageMessageDto(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final TextMessageDto textMessageDto = new TextMessageDto(randomizer().long_(), randomizer().string());
+        final ImageMessageDto imageMessageDto = new ImageMessageDto(randomizer().long_(), randomizer().string());
 
         // When
         final TextMessage textMessage = mappingFacade.map(textMessageDto, TextMessage.class);
@@ -72,8 +73,8 @@ public class AdvancedPolymorphicMappingTest extends AbstractMappingTest {
     )
     void testMapSToDAfterCaching() {
         // Given
-        final TextMessage textMessage = new TextMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
-        final ImageMessage imageMessage = new ImageMessage(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final TextMessage textMessage = new TextMessage(randomizer().long_(), randomizer().string());
+        final ImageMessage imageMessage = new ImageMessage(randomizer().long_(), randomizer().string());
         final Set<Message> messages = new HashSet<>();
         messages.add(textMessage);
         messages.add(imageMessage);

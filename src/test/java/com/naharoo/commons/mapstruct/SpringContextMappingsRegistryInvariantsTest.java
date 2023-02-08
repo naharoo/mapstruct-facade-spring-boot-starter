@@ -10,7 +10,9 @@ import java.util.function.UnaryOperator;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("ConstantConditions")
-class MappingsRegistryInvariantsTest {
+class SpringContextMappingsRegistryInvariantsTest {
+
+    public static final SpringContextMappingsRegistry MAPPINGS_REGISTRY = SpringContextMappingsRegistry.INSTANCE;
 
     @Test
     @DisplayName("When trying to register a mapping with null Identifier, an exception should be thrown")
@@ -21,7 +23,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-            () -> MappingsRegistry.register(identifier, mapping)
+            () -> MAPPINGS_REGISTRY.register(identifier, mapping)
         );
 
         // Then
@@ -37,7 +39,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-            () -> MappingsRegistry.register(identifier, mapping)
+            () -> MAPPINGS_REGISTRY.register(identifier, mapping)
         );
 
         // Then
@@ -52,7 +54,7 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-            () -> MappingsRegistry.retrieve(identifier)
+            () -> MAPPINGS_REGISTRY.retrieve(identifier)
         );
 
         // Then
@@ -67,28 +69,10 @@ class MappingsRegistryInvariantsTest {
 
         // When
         final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(
-            () -> MappingsRegistry.exists(identifier)
+            () -> MAPPINGS_REGISTRY.exists(identifier)
         );
 
         // Then
         throwableAssert.isNotNull().isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    @DisplayName("When trying to reflective create MappingsRegistry instance, error should be thrown")
-    void testCreateInstance() {
-        // Given
-        // no initial config
-
-        // When
-        final AbstractThrowableAssert<?, ? extends Throwable> throwableAssert = assertThatThrownBy(() -> {
-            final Class<MappingsRegistry> clazz = MappingsRegistry.class;
-            final Constructor<MappingsRegistry> constructor = clazz.getDeclaredConstructor();
-            constructor.setAccessible(true);
-            constructor.newInstance();
-        });
-
-        // Then
-        throwableAssert.isNotNull().getRootCause().isInstanceOf(IllegalAccessError.class);
     }
 }

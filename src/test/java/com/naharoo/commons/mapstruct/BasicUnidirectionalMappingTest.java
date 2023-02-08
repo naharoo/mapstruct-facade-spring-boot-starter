@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.ComponentScan;
 
+import static com.naharoo.commons.testingtoolkit.random.RandomizationSupport.randomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,7 +18,7 @@ class BasicUnidirectionalMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, S -> D mapping should be successful")
     void testMap() {
         // Given
-        final Organization organization = RANDOM.nextObject(Organization.class);
+        final Organization organization = randomizer().instance(Organization.class);
 
         // When
         final OrganizationDto organizationDto = mappingFacade.map(organization, OrganizationDto.class);
@@ -30,7 +31,7 @@ class BasicUnidirectionalMappingTest extends AbstractMappingTest {
     @DisplayName("When mappings are configured, D -> S mapping should throw MappingNotFoundException")
     void testMapReverse() {
         // Given
-        final OrganizationDto organizationDto = RANDOM.nextObject(OrganizationDto.class);
+        final OrganizationDto organizationDto = randomizer().instance(OrganizationDto.class);
 
         // When
         final AbstractThrowableAssert<

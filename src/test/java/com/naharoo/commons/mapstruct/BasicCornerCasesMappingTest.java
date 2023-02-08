@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import static com.naharoo.commons.testingtoolkit.random.RandomizationSupport.randomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -180,7 +181,7 @@ class BasicCornerCasesMappingTest extends AbstractMappingTest {
     @DisplayName("When mapping is not registered for S -> D, exception should be thrown")
     void testMappingNotRegisteredMap() {
         // Given
-        final Animal animal = new Animal(RANDOM.nextLong(), RANDOM.nextObject(String.class));
+        final Animal animal = new Animal(randomizer().long_(), randomizer().string());
         final Class<?> destinationClass = StringBuilder.class;
 
         // When

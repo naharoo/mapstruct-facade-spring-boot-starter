@@ -35,9 +35,10 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
 
         final MappingIdentifier directMappingIdentifier = MappingIdentifier.from(source, destination);
 
-        if (!MappingsRegistry.exists(directMappingIdentifier) || beanClass.isAnnotationPresent(Primary.class)) {
-            MappingsRegistry.register(directMappingIdentifier, castedBean::map);
-            MappingsRegistry.register(MappingIdentifier.from(destination, source), castedBean::mapReverse);
+        final SpringContextMappingsRegistry mappingsRegistry = SpringContextMappingsRegistry.INSTANCE;
+        if (!mappingsRegistry.exists(directMappingIdentifier) || beanClass.isAnnotationPresent(Primary.class)) {
+            mappingsRegistry.register(directMappingIdentifier, castedBean::map);
+            mappingsRegistry.register(MappingIdentifier.from(destination, source), castedBean::mapReverse);
         }
     }
 
@@ -52,8 +53,9 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
 
         final MappingIdentifier directMappingIdentifier = MappingIdentifier.from(source, destination);
 
-        if (!MappingsRegistry.exists(directMappingIdentifier) || beanClass.isAnnotationPresent(Primary.class)) {
-            MappingsRegistry.register(directMappingIdentifier, castedBean::map);
+        final SpringContextMappingsRegistry mappingsRegistry = SpringContextMappingsRegistry.INSTANCE;
+        if (!mappingsRegistry.exists(directMappingIdentifier) || beanClass.isAnnotationPresent(Primary.class)) {
+            mappingsRegistry.register(directMappingIdentifier, castedBean::map);
         }
     }
 }
