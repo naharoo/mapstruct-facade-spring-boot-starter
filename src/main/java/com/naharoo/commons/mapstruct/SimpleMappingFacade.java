@@ -19,10 +19,16 @@ import org.springframework.util.StopWatch;
 public class SimpleMappingFacade implements MappingFacade {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMappingFacade.class);
+    private final MappingsRegistry mappingsRegistry;
 
     @PublicApi
-    protected SimpleMappingFacade() {
-        // only for extension
+    public SimpleMappingFacade() {
+        this(SpringContextMappingsRegistry.INSTANCE);
+    }
+
+    @PublicApi
+    public SimpleMappingFacade(final MappingsRegistry mappingsRegistry) {
+        this.mappingsRegistry = mappingsRegistry;
     }
 
     private static void logMappingEntranceTraceLog(final Object source, final Class<?> destinationClass) {
@@ -87,11 +93,11 @@ public class SimpleMappingFacade implements MappingFacade {
 
         final Class<?> sourceClass = source.getClass();
         final MappingIdentifier identifier = MappingIdentifier.from(sourceClass, destinationClass);
-        UnaryOperator<Object> function = MappingsRegistry.retrieve(identifier);
+        UnaryOperator<Object> function = mappingsRegistry.retrieve(identifier);
 
         boolean doCache = false;
         if (function == null) {
-            for (final Map.Entry<MappingIdentifier, UnaryOperator<Object>> entry : MappingsRegistry.retrieveAll()) {
+            for (final Map.Entry<MappingIdentifier, UnaryOperator<Object>> entry : mappingsRegistry.retrieveAll()) {
                 final Class<?> fromClass = entry.getKey().getSource();
                 final Class<?> toClass = entry.getKey().getDestination();
 
@@ -111,7 +117,7 @@ public class SimpleMappingFacade implements MappingFacade {
         final String destinationSimpleName = destinationClass.getSimpleName();
 
         if (doCache) {
-            MappingsRegistry.register(MappingIdentifier.from(sourceClass, destinationClass), function);
+            mappingsRegistry.register(MappingIdentifier.from(sourceClass, destinationClass), function);
         }
 
         if (function == null) {

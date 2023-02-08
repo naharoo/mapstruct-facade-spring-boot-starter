@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.*;
 
+import static com.naharoo.commons.testingtoolkit.random.RandomizationSupport.randomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentScan("com.naharoo.commons.mapstruct.mapper.basic.nonfinalfields")
@@ -18,9 +19,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapSToD() {
         // Given
         final Address address = new Address(
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextInt()
+            randomizer().string(),
+            randomizer().string(),
+            randomizer().int_()
         );
 
         // When
@@ -38,9 +39,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapDToS() {
         // Given
         final AddressDto addressDto = new AddressDto(
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextInt()
+            randomizer().string(),
+            randomizer().string(),
+            randomizer().int_()
         );
 
         // When
@@ -58,9 +59,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void mapMapSetOfDToSetOfS() {
         // Given
         final Set<Address> addresses = new HashSet<>();
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        addresses.add(new Address(randomizer().string(), randomizer().string(), randomizer().int_()));
+        addresses.add(new Address(randomizer().string(), randomizer().string(), randomizer().int_()));
+        addresses.add(new Address(randomizer().string(), randomizer().string(), randomizer().int_()));
 
         // When
         final Set<AddressDto> addressDtos = mappingFacade.mapAsSet(addresses, AddressDto.class);
@@ -99,9 +100,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void mapMapSetOfDToSetOfSWithCustomizer() {
         // Given
         final Set<Address> addresses = new HashSet<>();
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
-        addresses.add(new Address(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()));
+        addresses.add(new Address(randomizer().string(), randomizer().string(), randomizer().int_()));
+        addresses.add(new Address(randomizer().string(), randomizer().string(), randomizer().int_()));
+        addresses.add(new Address(randomizer().string(), randomizer().string(), randomizer().int_()));
         final String country = UUID.randomUUID().toString();
 
         // When
@@ -132,9 +133,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapListOfDToListOfS() {
         // Given
         final List<AddressDto> addressDtos = Arrays.asList(
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_())
         );
 
         // When
@@ -159,9 +160,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapListOfDToListOfSWithCustomization() {
         // Given
         final List<AddressDto> addressDtos = Arrays.asList(
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_())
         );
         final String country = UUID.randomUUID().toString();
 
@@ -189,9 +190,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapCollectionOfDToArrayOfS() {
         // Given
         final List<AddressDto> addressDtos = Arrays.asList(
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_())
         );
 
         // When
@@ -214,9 +215,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapArrayOfDToArrayOfS() {
         // Given
         final AddressDto[] addressDtos = {
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt()),
-            new AddressDto(RANDOM.nextObject(String.class), RANDOM.nextObject(String.class), RANDOM.nextInt())
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_()),
+            new AddressDto(randomizer().string(), randomizer().string(), randomizer().int_())
         };
 
         // When
@@ -241,9 +242,9 @@ class BasicNonFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapSToDWithDestinationCustomization() {
         // Given
         final Address address = new Address(
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextInt()
+            randomizer().string(),
+            randomizer().string(),
+            randomizer().int_()
         );
         final String customizedCountry = UUID.randomUUID().toString();
 

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.math.BigDecimal;
 
+import static com.naharoo.commons.testingtoolkit.random.RandomizationSupport.randomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ComponentScan("com.naharoo.commons.mapstruct.mapper.basic.finalfields.car")
@@ -20,12 +21,12 @@ class BasicFinalFieldsMappingTest extends AbstractMappingTest {
     void testMap() {
         // Given
         final Car car = new Car(
-            RANDOM.nextLong(),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(CarType.class),
-            RANDOM.nextInt(),
-            RANDOM.nextObject(BigDecimal.class),
-            RANDOM.nextDouble()
+            randomizer().long_(),
+            randomizer().string(),
+            randomizer().enum_(CarType.class),
+            randomizer().int_(),
+            randomizer().bigDecimal(),
+            randomizer().double_()
         );
 
         // When
@@ -46,12 +47,12 @@ class BasicFinalFieldsMappingTest extends AbstractMappingTest {
     void testMapReverse() {
         // Given
         final CarDto carDto = new CarDto(
-            RANDOM.nextLong(),
-            RANDOM.nextObject(String.class),
-            RANDOM.nextObject(CarTypeDto.class),
-            RANDOM.nextInt(),
-            RANDOM.nextObject(BigDecimal.class),
-            RANDOM.nextDouble()
+            randomizer().long_(),
+            randomizer().string(),
+            randomizer().enum_(CarTypeDto.class),
+            randomizer().int_(),
+            randomizer().bigDecimal(),
+            randomizer().double_()
         );
 
         // When
