@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
@@ -219,6 +220,10 @@ public class SimpleMappingFacade implements MappingFacade {
 
     @PublicApi
     @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(
+        value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "Returning null for null input is the documented public MappingFacade contract."
+    )
     @Override
     public <S, D> D[] mapAsArray(final Collection<S> sources, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);
@@ -240,6 +245,10 @@ public class SimpleMappingFacade implements MappingFacade {
 
     @PublicApi
     @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(
+        value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "Returning null for null input is the documented public MappingFacade contract."
+    )
     @Override
     public <S, D> D[] mapAsArray(final S[] sources, final Class<D> destinationClass) {
         assertDestinationClass(destinationClass);

@@ -9,7 +9,7 @@ public class MapstructMapperFacadeAutoConfiguration {
 
     @PrivateApi
     @Bean
-    public MappingsRegistrationBeanPostProcessor mappingsRegistrationBeanPostProcessor() {
+    public static MappingsRegistrationBeanPostProcessor mappingsRegistrationBeanPostProcessor() {
         return new MappingsRegistrationBeanPostProcessor();
     }
 

@@ -3,6 +3,7 @@ package com.naharoo.commons.mapstruct;
 import static com.naharoo.commons.mapstruct.ClassUtils.extractGenericParameters;
 import static com.naharoo.commons.mapstruct.ClassUtils.isProxy;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -149,6 +150,10 @@ public class SimpleMappingsRegistry extends MappingsRegistry {
         }
     }
 
+    @SuppressFBWarnings(
+        value = "CLI_CONSTANT_LIST_INDEX",
+        justification = "Exactly two generic params (source, destination) are guaranteed by extractGenericParameters."
+    )
     private void registerUnidirectionalMapper(final UnidirectionalMapper<Object, Object> mapper) {
         final Class<?> mapperClass = mapper.getClass();
         final Class<?>[] genericClasses = extractGenericParameters(mapperClass, UnidirectionalMapper.class, 2);
@@ -162,6 +167,10 @@ public class SimpleMappingsRegistry extends MappingsRegistry {
         }
     }
 
+    @SuppressFBWarnings(
+        value = "CLI_CONSTANT_LIST_INDEX",
+        justification = "Exactly two generic params (source, destination) are guaranteed by extractGenericParameters."
+    )
     private void registerBidirectionalMapper(final BidirectionalMapper<Object, Object> mapper) {
         final Class<?> mapperClass = mapper.getClass();
         final Class<?>[] genericClasses = extractGenericParameters(mapperClass, BidirectionalMapper.class, 2);

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Or>
+    <Match>
+      <Bug pattern="SE_BAD_FIELD"/>
+    </Match>
+    <Match>
+      <Bug pattern="SE_NO_SERIALVERSIONID"/>
+    </Match>
+    <Match>
+      <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+    <Match>
+      <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+      <Bug pattern="REC_CATCH_EXCEPTION"/>
+    </Match>
+    <Match>
+      <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD"/>
+    </Match>
+    <Match>
+      <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
+    </Match>
+    <Match>
+      <Bug pattern="RI_REDUNDANT_INTERFACES"/>
+    </Match>
+    <Match>
+      <Bug pattern="DM_CONVERT_CASE"/>
+    </Match>
+    <Match>
+      <Bug pattern="BC_UNCONFIRMED_CAST"/>
+    </Match>
+    <Match>
+      <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON"/>
+    </Match>
+    <Match>
+      <Bug pattern="OPM_OVERLY_PERMISSIVE_METHOD"/>
+    </Match>
+    <Match>
+      <Bug pattern="IMC_IMMATURE_CLASS_BAD_SERIALVERSIONUID"/>
+    </Match>
+    <Match>
+      <Bug pattern="IMC_IMMATURE_CLASS_NO_TOSTRING"/>
+    </Match>
+    <Match>
+      <Bug pattern="AOM_ABSTRACT_OVERRIDDEN_METHOD"/>
+    </Match>
+    <Match>
+      <Bug pattern="IMPROPER_UNICODE"/>
+    </Match>
+    <Match>
+      <Bug pattern="SPRING_ENDPOINT"/>
+    </Match>
+    <Match>
+      <Bug pattern="CRLF_INJECTION_LOGS"/>
+    </Match>
+    <Match>
+      <Bug pattern="MDM_WAIT_WITHOUT_TIMEOUT"/>
+    </Match>
+    <Match>
+      <Bug pattern="EXS_EXCEPTION_SOFTENING_RETURN_FALSE"/>
+    </Match>
+    <Match>
+      <Bug pattern="NAB_NEEDLESS_BOOLEAN_CONSTANT_CONVERSION"/>
+    </Match>
+    <Match>
+      <Bug pattern="WEM_WEAK_EXCEPTION_MESSAGING"/>
+    </Match>
+    <Match>
+      <Bug pattern="ACEM_ABSTRACT_CLASS_EMPTY_METHODS"/>
+    </Match>
+    <Match>
+      <Bug pattern="AI_ANNOTATION_ISSUES_NEEDS_NULLABLE"/>
+    </Match>
+    <Match>
+      <Bug pattern="EXS_EXCEPTION_SOFTENING_NO_CONSTRAINTS"/>
+    </Match>
+    <Match>
+      <Bug pattern="LEST_LOST_EXCEPTION_STACK_TRACE"/>
+    </Match>
+    <Match>
+      <Bug pattern="EXS_EXCEPTION_SOFTENING_NO_CHECKED"/>
+    </Match>
+    <Match>
+      <Bug pattern="ITC_INHERITANCE_TYPE_CHECKING"/>
+    </Match>
+    <Match>
+      <Bug pattern="SERVLET_HEADER"/>
+    </Match>
+    <Match>
+      <Bug pattern="SPRING_CSRF_PROTECTION_DISABLED"/>
+    </Match>
+    <Match>
+      <Bug pattern="USBR_UNNECESSARY_STORE_BEFORE_RETURN"/>
+    </Match>
+    <Match>
+      <Bug pattern="OCP_OVERLY_CONCRETE_PARAMETER"/>
+    </Match>
+    <Match>
+      <Bug pattern="MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR"/>
+    </Match>
+    <Match>
+      <Bug pattern="PCOA_PARTIALLY_CONSTRUCTED_OBJECT_ACCESS"/>
+    </Match>
+    <Match>
+      <Bug pattern="FII_COMBINE_FILTERS"/>
+    </Match>
+    <Match>
+      <Bug pattern="PRMC_POSSIBLY_REDUNDANT_METHOD_CALLS"/>
+    </Match>
+    <Match>
+      <Bug pattern="RV_RETURN_VALUE_IGNORED_BAD_PRACTICE"/>
+    </Match>
+    <Match>
+      <Bug pattern="COOKIE_USAGE"/>
+    </Match>
+    <Match>
+      <Bug pattern="UEC_USE_ENUM_COLLECTIONS"/>
+    </Match>
+    <Match>
+      <Bug pattern="USFW_UNSYNCHRONIZED_SINGLETON_FIELD_WRITES"/>
+    </Match>
+    <Match>
+      <Bug pattern="MDM_THREAD_YIELD"/>
+    </Match>
+    <Match>
+      <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION"/>
+    </Match>
+    <Match>
+      <Bug pattern="ENV_USE_PROPERTY_INSTEAD_OF_ENV"/>
+    </Match>
+    <Match>
+      <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+    </Match>
+    <Match>
+      <Bug pattern="DP_DO_INSIDE_DO_PRIVILEGED"/>
+    </Match>
+    <Match>
+      <Bug pattern="RFI_SET_ACCESSIBLE"/>
+    </Match>
+    <Match>
+      <Bug pattern="DLS_DEAD_LOCAL_STORE"/>
+    </Match>
+    <Match>
+      <Bug pattern="CE_CLASS_ENVY"/>
+    </Match>
+    <Match>
+      <Bug pattern="STT_STRING_PARSING_A_FIELD"/>
+    </Match>
+    <Match>
+      <Bug pattern="ENMI_ONE_ENUM_VALUE"/>
+    </Match>
+    <Match>
+      <Bug pattern="IMC_IMMATURE_CLASS_NO_EQUALS"/>
+    </Match>
+    <Match>
+      <Bug pattern="ISC_INSTANTIATE_STATIC_CLASS"/>
+    </Match>
+    <Match>
+      <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
+    </Match>
+    <Match>
+      <Bug pattern="JPAI_NON_PROXIED_TRANSACTION_CALL"/>
+    </Match>
+  </Or>
+</FindBugsFilter>

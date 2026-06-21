@@ -2,6 +2,7 @@ package com.naharoo.commons.mapstruct;
 
 import static com.naharoo.commons.mapstruct.ClassUtils.extractGenericParameters;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Primary;
 
@@ -24,6 +25,11 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
+    @SuppressFBWarnings(
+        value = {"CLI_CONSTANT_LIST_INDEX", "PDP_POORLY_DEFINED_PARAMETER"},
+        justification = "Exactly two generic params (source, destination) are guaranteed by extractGenericParameters; "
+            + "the Object parameter is dictated by the BeanPostProcessor callback contract."
+    )
     private void processBidirectionalMapper(final Object bean) {
         @SuppressWarnings("unchecked")
         final BidirectionalMapper<Object, Object> castedBean = (BidirectionalMapper<Object, Object>) bean;
@@ -42,6 +48,11 @@ final class MappingsRegistrationBeanPostProcessor implements BeanPostProcessor {
         }
     }
 
+    @SuppressFBWarnings(
+        value = {"CLI_CONSTANT_LIST_INDEX", "PDP_POORLY_DEFINED_PARAMETER"},
+        justification = "Exactly two generic params (source, destination) are guaranteed by extractGenericParameters; "
+            + "the Object parameter is dictated by the BeanPostProcessor callback contract."
+    )
     private void processUnidirectionalMapper(final Object bean) {
         @SuppressWarnings("unchecked")
         final UnidirectionalMapper<Object, Object> castedBean = (UnidirectionalMapper<Object, Object>) bean;

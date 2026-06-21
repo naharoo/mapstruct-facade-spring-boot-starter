@@ -1,8 +1,16 @@
-## MapStruct Mapping Facade [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=naharoo_mapstruct-facade-spring-boot-starter&metric=alert_status)](https://sonarcloud.io/dashboard?id=naharoo_mapstruct-facade-spring-boot-starter)
+## MapStruct Mapping Facade
 
 ### Overview
 This is a generic Facade over MapStruct mapping Library.
 MapStruct gives as Java POJOs compile-time mapping, we give you a single entry and use point to all registered MapStruct mappers in Spring Boot environment. We use some spring-based reflection here to collect mapping metadata and register mappings.
+
+### Requirements
+| Library version | Java   | Spring Boot |
+|-----------------|--------|-------------|
+| `2.x`           | 17+    | 4.x         |
+| `1.x`           | 8+     | 2.x         |
+
+Version `2.0.0` is a breaking upgrade: it moves the baseline to **Java 17** and **Spring Boot 4.x** (Jakarta namespace). Stay on the `1.x` line for Java 8 / Spring Boot 2.x.
 
 ### How it works?
 Let's say you have 2 Java POJOs, `Car` and `CarDto`.
@@ -33,7 +41,7 @@ That's it. We've configured and registered a mapping! Now we can inject `Mapping
 @Component
 public class OurBusinessBean {
     
-    @Autowird
+    @Autowired
     private MappingFacade mappingFacade;
     
     public CarDto doMap(Car car) {
@@ -83,7 +91,7 @@ Maven (pom.xml)
     <dependency>
         <groupId>com.naharoo.commons</groupId>
         <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
-        <version>1.4.0</version>
+        <version>2.0.0</version>
     </dependency>
 </dependencies>
 
@@ -93,13 +101,12 @@ Maven (pom.xml)
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <source>${java.version}</source>
-                <target>${java.version}</target>
+                <release>17</release>
                 <annotationProcessorPaths>
                     <path>
                         <groupId>org.mapstruct</groupId>
                         <artifactId>mapstruct-processor</artifactId>
-                        <version>1.4.2.Final</version>
+                        <version>1.6.3</version>
                     </path>
                 </annotationProcessorPaths>
             </configuration>
@@ -111,17 +118,19 @@ Maven (pom.xml)
 Gradle (build.gradle)
 ```
 dependencies {
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:1.4.0'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+    implementation 'com.naharoo.commons:mapstruct-facade-spring-boot-starter:2.0.0'
 }
 ```
 (Note: If you are using Lombok, then you should also include `org.projectlombok:lombok-mapstruct-binding`)
 
 ### External Dependencies
-This library has only two dependencies:
+This library has only the following compile dependencies:
 1. `org.springframework.boot:spring-boot-starter`
-2. `org.mapstruct:mapstruct`.
-They will be promoted transitively. 
+2. `org.mapstruct:mapstruct`
+3. `org.jspecify:jspecify` (nullability annotations)
+
+They will be promoted transitively. Proxy detection for `org.hibernate.orm:hibernate-core` and `org.javassist:javassist` is supported but those dependencies are `optional` — they are only used when your application already provides them on the classpath.
 So their versions may be different from your application's existing dependencies'.
 In such cases, to avoid dependency conflicts you can adjust their versions in your local `dependencyManagement` configurations like so:
 
@@ -132,7 +141,7 @@ Maven
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.3.0.Final</version>
+            <version>1.6.3</version>
         </dependency>
     </dependencies>
 </dependencyManagement>
@@ -142,7 +151,7 @@ Gradle
 ```
 dependencyManagement {
     dependencies {
-        dependency("org.mapstruct:mapstruct:1.3.0.Final")
+        dependency("org.mapstruct:mapstruct:1.6.3")
     }
 }
 ```

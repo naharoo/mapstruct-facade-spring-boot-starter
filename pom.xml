@@ -4,7 +4,7 @@
 
   <groupId>com.naharoo.commons</groupId>
   <artifactId>mapstruct-facade-spring-boot-starter</artifactId>
-  <version>1.6.6-SNAPSHOT</version>
+  <version>2.0.0-SNAPSHOT</version>
 
   <name>MapStruct Mapping Facade</name>
   <description>Mapping Facade for popular MapStruct library mappers in Spring Boot environment</description>
@@ -33,30 +33,60 @@
   </developers>
 
   <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <java.version>17</java.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.boot.version>2.4.5</spring.boot.version>
-    <mapstruct.version>1.4.2.Final</mapstruct.version>
-    <deploy.plugin.version>3.0.0-M1</deploy.plugin.version>
-    <release.plugin.version>3.0.0-M4</release.plugin.version>
-    <surefire.plugin.version>2.22.2</surefire.plugin.version>
-    <failsafe.plugin.version>2.22.2</failsafe.plugin.version>
-    <compiler.plugin.version>3.8.1</compiler.plugin.version>
-    <jacoco.plugin.version>0.8.6</jacoco.plugin.version>
+
+    <!--
+      Tests generate CGLIB/Hibernate proxies of java.lang types (e.g. Runnable) via reflective
+      ClassLoader.defineClass, which JDK 17+ strong encapsulation blocks without this opens.
+      JaCoCo's prepare-agent prepends its agent to this value, preserving it.
+    -->
+    <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine>
+
+    <!-- Spring Boot / Framework baseline -->
+    <spring.boot.version>4.1.0</spring.boot.version>
+
+    <!-- Externally managed (not in the Spring Boot BOM) -->
+    <mapstruct.version>1.6.3</mapstruct.version>
+    <javassist.version>3.30.2-GA</javassist.version>
+
+    <!-- Test-only, frozen upstream artifact -->
     <testing-toolkit.version>0.2.0</testing-toolkit.version>
-    <jsr305.version>3.0.2</jsr305.version>
-    <maven-scm-provider-gitexe.version>1.11.2</maven-scm-provider-gitexe.version>
-    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
-    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-    <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-    <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+
+    <!-- Build plugins -->
+    <compiler.plugin.version>3.15.0</compiler.plugin.version>
+    <surefire.plugin.version>3.5.6</surefire.plugin.version>
+    <failsafe.plugin.version>3.5.6</failsafe.plugin.version>
+    <jacoco.plugin.version>0.8.15</jacoco.plugin.version>
+    <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+    <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+    <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
+    <maven-scm-provider-gitexe.version>2.2.1</maven-scm-provider-gitexe.version>
+    <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
+    <spotless-maven-plugin.version>3.7.0</spotless-maven-plugin.version>
     <skip.spotless.scan>false</skip.spotless.scan>
-    <spotless-maven-plugin.version>2.17.2</spotless-maven-plugin.version>
-    <javassist.version>3.28.0-GA</javassist.version>
-    <hibernate.version>5.6.7.Final</hibernate.version>
+
+    <!-- Static analysis -->
+    <spotbugs-maven-plugin.version>4.10.2.0</spotbugs-maven-plugin.version>
+    <spotbugs-annotations.version>4.10.2</spotbugs-annotations.version>
+    <fb-contrib.version>7.7.4</fb-contrib.version>
+    <findsecbugs-plugin.version>1.14.0</findsecbugs-plugin.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -67,7 +97,18 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <version>${spring.boot.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+    </dependency>
+    <dependency>
+      <!-- @SuppressFBWarnings only; CLASS retention, not needed at runtime by consumers -->
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <version>${spotbugs-annotations.version}</version>
+      <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.javassist</groupId>
@@ -76,21 +117,13 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>${hibernate.version}</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>com.google.code.findbugs</groupId>
-      <artifactId>jsr305</artifactId>
-      <version>${jsr305.version}</version>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>${spring.boot.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -121,8 +154,8 @@
         <artifactId>jacoco-maven-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -156,8 +189,7 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${compiler.plugin.version}</version>
           <configuration>
-            <source>${java.version}</source>
-            <target>${java.version}</target>
+            <release>${java.version}</release>
             <annotationProcessorPaths>
               <path>
                 <groupId>org.mapstruct</groupId>
@@ -166,6 +198,39 @@
               </path>
             </annotationProcessorPaths>
           </configuration>
+        </plugin>
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>${spotbugs-maven-plugin.version}</version>
+          <configuration>
+            <effort>Max</effort>
+            <threshold>Low</threshold>
+            <failOnError>true</failOnError>
+            <includeTests>false</includeTests>
+            <excludeFilterFile>${maven.multiModuleProjectDirectory}/spotbugs-exclude.xml</excludeFilterFile>
+            <plugins>
+              <plugin>
+                <groupId>com.mebigfatguy.fb-contrib</groupId>
+                <artifactId>fb-contrib</artifactId>
+                <version>${fb-contrib.version}</version>
+              </plugin>
+              <plugin>
+                <groupId>com.h3xstream.findsecbugs</groupId>
+                <artifactId>findsecbugs-plugin</artifactId>
+                <version>${findsecbugs-plugin.version}</version>
+              </plugin>
+            </plugins>
+          </configuration>
+          <executions>
+            <execution>
+              <id>spotbugs-check</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>com.diffplug.spotless</groupId>
@@ -206,7 +271,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-deploy-plugin</artifactId>
-              <version>${deploy.plugin.version}</version>
+              <version>${maven-deploy-plugin.version}</version>
               <configuration>
                 <skip>true</skip>
               </configuration>
@@ -234,12 +299,6 @@
               <configuration>
                 <skip>true</skip>
               </configuration>
-            </plugin>
-
-            <plugin>
-              <groupId>org.sonatype.plugins</groupId>
-              <artifactId>nexus-staging-maven-plugin</artifactId>
-              <version>${nexus-staging-maven-plugin.version}</version>
             </plugin>
 
             <plugin>
@@ -276,19 +335,13 @@
     <profile>
       <id>ci</id>
 
-      <properties>
-        <sonar.projectKey>naharoo_mapstruct-facade-spring-boot-starter</sonar.projectKey>
-        <sonar.organization>nhos</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-      </properties>
-
       <build>
         <pluginManagement>
           <plugins>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-deploy-plugin</artifactId>
-              <version>${deploy.plugin.version}</version>
+              <version>${maven-deploy-plugin.version}</version>
               <configuration>
                 <skip>true</skip>
               </configuration>
@@ -335,12 +388,6 @@
             </plugin>
 
             <plugin>
-              <groupId>org.sonatype.plugins</groupId>
-              <artifactId>nexus-staging-maven-plugin</artifactId>
-              <version>${nexus-staging-maven-plugin.version}</version>
-            </plugin>
-
-            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-source-plugin</artifactId>
               <version>${maven-source-plugin.version}</version>
@@ -374,49 +421,45 @@
     <profile>
       <id>artifact-push</id>
 
-      <properties>
-        <!--suppress UnresolvedMavenProperty -->
-        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
-      </properties>
-
-      <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
-
       <build>
+        <!--
+          Active plugins for publishing. central-publishing must be declared here (not only in
+          pluginManagement) so its extension takes over the deploy phase and uploads to Central.
+        -->
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${central-publishing-maven-plugin.version}</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>true</autoPublish>
+              <waitUntil>published</waitUntil>
+            </configuration>
+          </plugin>
+        </plugins>
         <pluginManagement>
           <plugins>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-deploy-plugin</artifactId>
-              <version>${deploy.plugin.version}</version>
-              <executions>
-                <execution>
-                  <id>default-deploy</id>
-                  <phase>deploy</phase>
-                  <goals>
-                    <goal>deploy</goal>
-                  </goals>
-                </execution>
-              </executions>
+              <version>${maven-deploy-plugin.version}</version>
+              <configuration>
+                <!-- Publishing is handled by the Central Portal plugin below. -->
+                <skip>true</skip>
+              </configuration>
             </plugin>
 
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-release-plugin</artifactId>
-              <version>${release.plugin.version}</version>
+              <version>${maven-release-plugin.version}</version>
               <configuration>
                 <localCheckout>true</localCheckout>
                 <pushChanges>false</pushChanges>
                 <mavenExecutorId>forked-path</mavenExecutorId>
-                <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
+                <releaseProfiles>artifact-push</releaseProfiles>
               </configuration>
               <dependencies>
                 <dependency>
@@ -425,18 +468,6 @@
                   <version>${maven-scm-provider-gitexe.version}</version>
                 </dependency>
               </dependencies>
-            </plugin>
-
-            <plugin>
-              <groupId>org.sonatype.plugins</groupId>
-              <artifactId>nexus-staging-maven-plugin</artifactId>
-              <version>${nexus-staging-maven-plugin.version}</version>
-              <extensions>true</extensions>
-              <configuration>
-                <serverId>ossrh</serverId>
-                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                <autoReleaseAfterClose>true</autoReleaseAfterClose>
-              </configuration>
             </plugin>
 
             <plugin>
